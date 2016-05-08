@@ -1,0 +1,9 @@
+.gradle
+.idea
+/app/build
+/app/libs
+/app/src/androidTest
+/app/src/test
+/app/src/.gitignore
+/build
+/local.properties
