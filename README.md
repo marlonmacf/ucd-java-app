@@ -8,4 +8,4 @@ Tecnologias utilizadas no projeto:
  - Projeto Gradle
  - Java Activities
  - XML Layouts
- - Volley
+ - Retrofit 2
