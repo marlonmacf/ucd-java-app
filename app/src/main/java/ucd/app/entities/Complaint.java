@@ -1,4 +1,4 @@
-package ucd.domain.entities;
+package ucd.app.entities;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -29,6 +29,21 @@ public class Complaint {
 
     @SerializedName("complaintPhotos")
     private Set<ComplaintPhoto> complaintPhotos;
+
+    public Complaint(Integer id) {
+        this.id = id;
+    }
+
+    public Complaint(Integer id, User user, User inspector, String status, String latitude, String longitude, String description, Set<ComplaintPhoto> complaintPhotos) {
+        this.id = id;
+        this.user = user;
+        this.inspector = inspector;
+        this.status = status;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
+        this.complaintPhotos = complaintPhotos;
+    }
 
     public Integer getId() {
         return id;

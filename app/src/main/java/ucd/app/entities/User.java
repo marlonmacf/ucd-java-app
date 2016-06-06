@@ -1,4 +1,4 @@
-package ucd.domain.entities;
+package ucd.app.entities;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,6 +21,19 @@ public class User {
 
     @SerializedName("score")
     private Byte score;
+
+    public User(Integer id) {
+        this.id = id;
+    }
+
+    public User(Integer id, String name, String email, String password, Byte inspector, Byte score) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.inspector = inspector;
+        this.score = score;
+    }
 
     public Integer getId() {
         return id;
