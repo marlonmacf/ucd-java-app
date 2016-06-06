@@ -18,7 +18,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ucd.app.R;
-import ucd.app.adapters.UserAdapter;
 import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
