@@ -9,3 +9,4 @@ Tecnologias utilizadas no projeto:
  - Java Activities
  - XML Layouts
  - Retrofit 2
+ - GoogleGson
