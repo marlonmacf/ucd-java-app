@@ -4,6 +4,6 @@
 /app/libs
 /app/src/androidTest
 /app/src/test
-/app/src/.gitignore
+/app/.gitignore
 /build
 /local.properties
