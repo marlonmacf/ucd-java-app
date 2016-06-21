@@ -6,7 +6,6 @@ Tecnologias utilizadas no projeto:
 
  - Projeto Java Android
  - Projeto Gradle
- - Java Activities
- - XML Layouts
+ - Material Design
  - Retrofit 2
  - GoogleGson
