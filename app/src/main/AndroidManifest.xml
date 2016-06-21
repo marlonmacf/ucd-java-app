@@ -14,7 +14,7 @@
             android:theme="@style/AppTheme">
 
         <!-- Main Activity -->
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".views.activities.MainActivity">
 
             <!-- Default intent filter -->
             <intent-filter>
