@@ -1,14 +1,14 @@
 package ucd.app.views.fragments;
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import ucd.app.R;
 
-public class PhotoFragment extends Fragment{
+public class PhotoFragment extends Fragment {
 
     public PhotoFragment() {
         // Required empty public constructor

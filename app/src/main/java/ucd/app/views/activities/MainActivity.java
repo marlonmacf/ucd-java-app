@@ -1,20 +1,18 @@
 package ucd.app.views.activities;
 
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import ucd.app.R;
-import ucd.app.entities.User;
-import ucd.app.rest.ApiClient;
-import ucd.app.rest.ApiService;
+import android.support.v7.widget.Toolbar;
 
-import java.util.List;
+import ucd.app.R;
+import ucd.app.views.adapters.ViewPagerAdapter;
+import ucd.app.views.fragments.InfoFragment;
+import ucd.app.views.fragments.PhotoFragment;
+import ucd.app.views.fragments.PlaceFragment;
+import ucd.app.views.fragments.RankingFragment;
+import ucd.app.views.fragments.TaskFragment;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -22,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {
-            R.drawable.ic_tab_info,
-            R.drawable.ic_tab_photo,
-            R.drawable.ic_tab_place,
-            R.drawable.ic_tab_ranking,
-            R.drawable.ic_tab_task
+            R.drawable.ic_tab_info_dark,
+            R.drawable.ic_tab_photo_dark,
+            R.drawable.ic_tab_place_dark,
+            R.drawable.ic_tab_ranking_dark,
+            R.drawable.ic_tab_task_dark
     };
 
     // Service for access the RETROFIT API.
@@ -102,42 +100,9 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new InfoFragment(), "INFO");
         adapter.addFragment(new PhotoFragment(), "PHOTO");
-        adapter.addFragment(new PlaceFragment(), "PLACE");        
+        adapter.addFragment(new PlaceFragment(), "PLACE");
         adapter.addFragment(new RankingFragment(), "RANKING");
         adapter.addFragment(new TaskFragment(), "TASK");
         viewPager.setAdapter(adapter);
-    }
-    
-    // Custom adapter class provides fragments required for the view pager.
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-    
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            
-            // return null to display only the icon
-            return null;
-        }
     }
 }
