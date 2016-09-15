@@ -12,24 +12,46 @@
         android:paddingTop="10dp"
         tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/title_info"
+            android:textSize="45dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
+
         <!-- A CardView that contains a TextView -->
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_um"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/info_card_um" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_1"
+                android:textSize="15dp"
                 android:textStyle="bold" />
+
 
         </android.support.v7.widget.CardView>
 
@@ -38,18 +60,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_dois"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_dois" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_2"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -59,18 +94,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view2"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_tres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_tres" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_3"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -80,18 +128,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view3"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_quatro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_quatro" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_4"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -101,18 +162,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view4"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_cinco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_cinco" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_5"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -122,18 +196,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view5"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_seis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_seis" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_6"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -143,18 +230,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view6"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_sete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_sete" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_7"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -164,18 +264,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view7"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_oito"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_oito" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_8"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -185,18 +298,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view8"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
+            <ImageView
+                android:id="@+id/imagem_nove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_nove" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_9"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
@@ -206,64 +332,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_view9"
+            android:layout_marginTop="5dp"
+
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="15dp">
 
-            <TextView
+            <ImageView
+                android:id="@+id/imagem_dez"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
-                android:textStyle="bold" />
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_view10"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="2dp"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardUseCompatPadding="true"
-            card_view:contentPaddingLeft="15dp">
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/info_card_dez" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_10"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/card_view12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/card_view11"
-            card_view:cardCornerRadius="5dp"
-            card_view:cardElevation="2dp"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardUseCompatPadding="true"
-            card_view:contentPaddingLeft="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="INFO"
-                android:textSize="40dp"
-                android:textStyle="bold" />
-
-        </android.support.v7.widget.CardView>
-        
     </RelativeLayout>
 
 </ScrollView>
