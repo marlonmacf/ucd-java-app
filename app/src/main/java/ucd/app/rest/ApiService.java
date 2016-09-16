@@ -39,4 +39,6 @@ public interface ApiService {
     @DELETE("/complaint/{complaint}")
     Call<Complaint> deleteComplaint(@Path("complaint") String idComplaint);
 
+    @GET("/ranking")
+    Call<List<User>> fetchRanking();
 }

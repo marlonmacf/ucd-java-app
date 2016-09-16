@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">"Unidos Contra a Dengue"</string>
 
-    <string name="title_info"> Informátivo </string>
+    <string name="title_info"> Informativo </string>
 
     <string name="info_card_1"> Mantenha a caixa d\'agua sempre fechada com tampa adequada </string>
     <string name="info_card_2"> Remova folhas, galhos e tudo que possa impedir a água de correr pelas calhas </string>
