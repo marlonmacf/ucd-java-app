@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    
+
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
     // Custom adapter class provides fragments required for the view pager.
@@ -32,7 +32,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        
+
         // return null to display only the icon
         return null;
     }

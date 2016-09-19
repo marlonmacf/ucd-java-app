@@ -1,15 +1,78 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="info.androidhive.materialtabs.fragments.OneFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TASK"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
-</RelativeLayout>
+        <!-- A CardView that contains a TextView -->
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_task1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPaddingLeft="35dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="onCheckboxClicked"
+                android:paddingTop="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_1"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view_task2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/card_view_task1"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:cardUseCompatPadding="true"
+            card_view:contentPaddingLeft="35dp">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="onCheckboxClicked"
+                android:paddingTop="50dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/info_card_1"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+</ScrollView>

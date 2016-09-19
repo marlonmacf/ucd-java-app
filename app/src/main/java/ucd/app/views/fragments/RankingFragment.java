@@ -51,14 +51,14 @@ public class RankingFragment extends Fragment {
         this.listView = (ListView)view.findViewById(R.id.ranking_list);
 
         // Defined Array values to show in ListView
-        values = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View"
+        values = new String[] { "1 |    Android List View",
+                "2 |    Adapter implementation",
+                "3 |    Simple List View In Android",
+                "4 |    Create List View Android",
+                "5 |    Android Example",
+                "6 |    List View Source Code",
+                "7 |    List View Array Adapter",
+                "8 |    Android Example List View"
         };
 
 

@@ -39,8 +39,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/info_card_um"
-                />
+                android:src="@drawable/info_card_um" />
 
             <TextView
                 android:layout_width="wrap_content"
