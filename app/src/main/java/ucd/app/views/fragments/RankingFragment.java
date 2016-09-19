@@ -1,11 +1,13 @@
 package ucd.app.views.fragments;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -24,7 +26,7 @@ public class RankingFragment extends Fragment {
     // Service for access the RETROFIT API.
     private ApiService apiService;
 
-    // ProgressBar for loading the requests.
+    //  ProgressBar for loading the requests.
     //private ProgressBar progressBar;
 
     private ListView listView ;
@@ -32,7 +34,7 @@ public class RankingFragment extends Fragment {
     private String[] values;
 
     public RankingFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -49,7 +51,7 @@ public class RankingFragment extends Fragment {
         this.listView = (ListView)view.findViewById(R.id.ranking_list);
 
         // Defined Array values to show in ListView
-        String[] values = new String[] { "Android List View",
+        values = new String[] { "Android List View",
                 "Adapter implementation",
                 "Simple List View In Android",
                 "Create List View Android",
@@ -58,6 +60,7 @@ public class RankingFragment extends Fragment {
                 "List View Array Adapter",
                 "Android Example List View"
         };
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, values);
 
@@ -99,20 +102,11 @@ public class RankingFragment extends Fragment {
 //
 //        });
 
-
-
-
-
-
-
-
         // Define a new Adapter
         // First parameter - Context
         // Second parameter - Layout for the row
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
-
-
 
         return view;
     }

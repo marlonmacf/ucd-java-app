@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bar_top"
         android:layout_centerHorizontal="true"
-        android:paddingTop="10dp">
+        android:paddingTop="30dp">
 
         <LinearLayout
             android:id="@+id/score"
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingTop="190dp">
+        android:paddingTop="210dp">
 
         <TextView
             android:id="@+id/txtScore"
@@ -96,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/scoreTxt"
-        android:paddingTop="20dp">
+        android:paddingTop="35dp">
 
         <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_view_ranking"
