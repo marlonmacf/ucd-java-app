@@ -1,6 +1,5 @@
 package ucd.app.views.fragments;
 
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -33,51 +32,51 @@ public class TaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_task, container, false);
 
-        List<CheckBox> checkBoxList = new ArrayList<>();
+        view = inflater.inflate(R.layout.fragment_task, container, false);// ------------------------------------------------------------------------ Inflate the layout for this fragment
 
-        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox1));
-        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox2));
+        List<CheckBox> checkBoxList = new ArrayList<>();// ------------------------------------------------------------------------------------------ Lista para todos os CheckBox;
 
-        for (final CheckBox ckBox : checkBoxList) {
-            ckBox.setOnClickListener(new View.OnClickListener() {
+        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox1)); // ----------------------------------------------------------------------------- Adicionando os CheckBox na lista;
+        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox2)); //
+
+        for (final CheckBox ckBox : checkBoxList) { // ---------------------------------------------------------------------------------------------- Percorre a lista de CheckBox adicionando onClickListener em cada um;
+            ckBox.setOnClickListener(new View.OnClickListener() { // -------------------------------------------------------------------------------- Coloca onClickListener em cada CheckBox;
                 @Override
 
                 public void onClick(View v) {
-                    if (((CheckBox) ckBox).isChecked()) { //Clicou no CheckBox
+                    if (((CheckBox) ckBox).isChecked()) {// ----------------------------------------------------------------------------------------- Clicou no CheckBox;
 
-                        CardView c = (CardView) ckBox.getParent();
-                        TextView t = (TextView) c.getChildAt(1);
-                        String msg =  (String) t.getText();
+                        CardView c = (CardView) ckBox.getParent(); //-------------------------------------------------------------------------------- Pega o CardView do determinado CheckBox;
+                        TextView t = (TextView) c.getChildAt(1); // --------------------------------------------------------------------------------- Pega o primeiro filho do determinado CardView (um TextView);
+                        String msg =  (String) t.getText(); // -------------------------------------------------------------------------------------- Pega o texto do TextView;
 
                         new AlertDialog.Builder(c.getContext())
-                                
+
                                 .setTitle(R.string.task_dialog_title)
                                 .setMessage(msg)
-                                .setPositiveButton(R.string.task_dialog_button2, new DialogInterface.OnClickListener() {
+                                .setPositiveButton(R.string.task_dialog_button2, new DialogInterface.OnClickListener() { // ------------------------ Botão "Sim";
                                     public void onClick(DialogInterface dialog, int which) {
-                                        CardView c = (CardView) ckBox.getParent();
-                                        c.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark));
-                                        TextView t = (TextView) c.getChildAt(1);
-                                        t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
-                                        ckBox.setClickable(false);
+                                        CardView c = (CardView) ckBox.getParent(); // -------------------------------------------------------------- Pega o CardView do determinado CheckBox;
+                                        c.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark)); //----------- Muda a Cor do CardView;
+                                        TextView t = (TextView) c.getChildAt(1); // ---------------------------------------------------------------- Pega o TextView do Card;
+                                        t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary)); // ------------------------ Muda a cor do texto do CardView;
+                                        ckBox.setClickable(false); // ------------------------------------------------------------------------------ Desabilita o click no CheckBox;
                                     }
                                 })
-                                .setNegativeButton(R.string.task_dialog_button1, new DialogInterface.OnClickListener() {
+                                .setNegativeButton(R.string.task_dialog_button1, new DialogInterface.OnClickListener() { // ------------------------ Botão "Não";
                                     public void onClick(DialogInterface dialog, int which) {
-                                        ckBox.setChecked(false);
+                                        ckBox.setChecked(false); // -------------------------------------------------------------------------------- Desmarca o CheckBox;
                                     }
                                 })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
+                                .setIcon(android.R.drawable.ic_dialog_alert) // -------------------------------------------------------------------- Adiciona Icone no AlertDialog;
+                                .show(); // -------------------------------------------------------------------------------------------------------- Mostra o AlertDialog;
 
-                    }//fianl do if
-                }//final do onClick
+                    }//final do if;
+                }//final do onClick;
 
-            });//final do OnClickListener
-        }//final do for
+            });//final do OnClickListener;
+        }//final do for;
         return view;
     }
 
