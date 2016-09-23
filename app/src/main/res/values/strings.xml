@@ -14,5 +14,9 @@
     <string name="info_card_9"> Entregue seus pneus velhos ao serviço de limpeza urbana ou guarde-os sem água em local coberto e abrigados da chuva </string>
     <string name="info_card_10"> Coloque o lixo em sacos plásticos e mantenha a lixeira bem fechada. Não jogue lixo em terrenos baldios </string>
 
+    <string name="task_dialog_title"> Deseja confirmar esta atividade ?</string>
+    <string name="task_dialog_button1"> Não</string>
+    <string name="task_dialog_button2"> Sim</string>
+
 
 </resources>

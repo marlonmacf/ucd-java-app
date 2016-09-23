@@ -70,7 +70,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="70dp"
                 android:layout_marginRight="25dp"
-                android:text="@string/info_card_1"
+                android:text="@string/info_card_2"
                 android:textSize="15dp"
                 android:textStyle="bold"/>
 
