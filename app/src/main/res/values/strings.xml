@@ -14,9 +14,20 @@
     <string name="info_card_9"> Entregue seus pneus velhos ao serviço de limpeza urbana ou guarde-os sem água em local coberto e abrigados da chuva </string>
     <string name="info_card_10"> Coloque o lixo em sacos plásticos e mantenha a lixeira bem fechada. Não jogue lixo em terrenos baldios </string>
 
-    <string name="task_dialog_title"> Deseja confirmar esta atividade ?</string>
-    <string name="task_dialog_button1"> Não</string>
-    <string name="task_dialog_button2"> Sim</string>
+    <string name="photo_button"> Realizar Denúncia </string>
+    <string name="photo_subHeader_1">Localização atual</string>
+    <string name="photo_subHeader_2">Endereço</string>
+    <string name="photo_subHeader_3">Observação</string>
+    <string name="photo_lat"> Latitude: </string>
+    <string name="photo_lon"> Longitude: </string>
+    <string name="photo_rua"> Rua: </string>
+    <string name="photo_bairro"> Bairro: </string>
+    <string name="photo_cidade"> Cidade: </string>
+    <string name="photo_uf"> UF: </string>
+    <string name="photo_obs_hint">Ex: Terreno baldio, abandonado, com lixo, etc.</string>
 
+    <string name="task_dialog_title"> Deseja confirmar esta atividade ? </string>
+    <string name="task_dialog_button1"> Não </string>
+    <string name="task_dialog_button2"> Sim </string>
 
 </resources>
