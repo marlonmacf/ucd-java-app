@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,44 +36,41 @@ public class TaskFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_task, container, false);// ------------------------------------------------------------------------ Inflate the layout for this fragment
 
-        List<CheckBox> checkBoxList = new ArrayList<>();// ------------------------------------------------------------------------------------------ Lista para todos os CheckBox;
+        List<CardView> cardViews = new ArrayList<>();
 
-        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox1)); // ----------------------------------------------------------------------------- Adicionando os CheckBox na lista;
-        checkBoxList.add((CheckBox) view.findViewById(R.id.ckBox2)); //
+        cardViews.add((CardView) view.findViewById(R.id.card_view_task1));
+        cardViews.add((CardView) view.findViewById(R.id.card_view_task2));
 
-        for (final CheckBox ckBox : checkBoxList) { // ---------------------------------------------------------------------------------------------- Percorre a lista de CheckBox adicionando onClickListener em cada um;
-            ckBox.setOnClickListener(new View.OnClickListener() { // -------------------------------------------------------------------------------- Coloca onClickListener em cada CheckBox;
+        for (final CardView cdview : cardViews) { // ------------------------------------------------------------------------------------------------- Percorre a lista de CheckBox adicionando onClickListener em cada um;
+            cdview.setOnClickListener(new View.OnClickListener() { // -------------------------------------------------------------------------------- Coloca onClickListener em cada CheckBox;
                 @Override
 
+                //FUTURAMENTE VERIFICAR SE O CARDVIEW ESTÁ MARCADO OU NÃO !!!!!!!!!!
+
                 public void onClick(View v) {
-                    if (((CheckBox) ckBox).isChecked()) {// ----------------------------------------------------------------------------------------- Clicou no CheckBox;
 
-                        CardView c = (CardView) ckBox.getParent(); //-------------------------------------------------------------------------------- Pega o CardView do determinado CheckBox;
-                        TextView t = (TextView) c.getChildAt(1); // --------------------------------------------------------------------------------- Pega o primeiro filho do determinado CardView (um TextView);
-                        String msg =  (String) t.getText(); // -------------------------------------------------------------------------------------- Pega o texto do TextView;
+                    TextView t = (TextView) cdview.getChildAt(0); // --------------------------------------------------------------------------------- Pega o primeiro filho do determinado CardView (um TextView);
+                    String msg = (String) t.getText(); // -------------------------------------------------------------------------------------------- Pega o texto do TextView;
 
-                        new AlertDialog.Builder(c.getContext())
+                    new AlertDialog.Builder(cdview.getContext())
 
-                                .setTitle(R.string.task_dialog_title)
-                                .setMessage(msg)
-                                .setPositiveButton(R.string.task_dialog_button2, new DialogInterface.OnClickListener() { // ------------------------ Botão "Sim";
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        CardView c = (CardView) ckBox.getParent(); // -------------------------------------------------------------- Pega o CardView do determinado CheckBox;
-                                        c.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark)); //----------- Muda a Cor do CardView;
-                                        TextView t = (TextView) c.getChildAt(1); // ---------------------------------------------------------------- Pega o TextView do Card;
-                                        t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary)); // ------------------------ Muda a cor do texto do CardView;
-                                        ckBox.setClickable(false); // ------------------------------------------------------------------------------ Desabilita o click no CheckBox;
-                                    }
-                                })
-                                .setNegativeButton(R.string.task_dialog_button1, new DialogInterface.OnClickListener() { // ------------------------ Botão "Não";
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ckBox.setChecked(false); // -------------------------------------------------------------------------------- Desmarca o CheckBox;
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert) // -------------------------------------------------------------------- Adiciona Icone no AlertDialog;
-                                .show(); // -------------------------------------------------------------------------------------------------------- Mostra o AlertDialog;
+                            .setTitle(R.string.task_dialog_title)
+                            .setMessage(msg)
+                            .setPositiveButton(R.string.task_dialog_button2, new DialogInterface.OnClickListener() { // ------------------------------ Botão "Sim";
+                                public void onClick(DialogInterface dialog, int which) {
+                                    cdview.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark)); //----------- Muda a Cor do CardView;
+                                    TextView t = (TextView) cdview.getChildAt(0); // ---------------------------------------------------------------- Pega o TextView do Card;
+                                    t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary)); // ----------------------------- Muda a cor do texto do CardView;
+                                }
+                            })
+                            .setNegativeButton(R.string.task_dialog_button1, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
+                                public void onClick(DialogInterface dialog, int which) {
 
-                    }//final do if;
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert) // ------------------------------------------------------------------------- Adiciona Icone no AlertDialog;
+                            .show(); // ------------------------------------------------------------------------------------------------------------- Mostra o AlertDialog;
+
                 }//final do onClick;
 
             });//final do OnClickListener;
