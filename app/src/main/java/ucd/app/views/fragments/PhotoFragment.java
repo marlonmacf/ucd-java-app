@@ -26,14 +26,14 @@ import ucd.app.R;
 
 public class PhotoFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    ImageView imageTeste;
-    //    ImageButton addImageButton;
+    ImageView imageView1;
+    ImageView imageView2;
+    ImageView imageView3;
     ImageView addImageButton;
+    ImageView mainPhoto;
     Button submitComplaint;
     View view;
 
-    TextView latitude;
-    TextView longitude;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -49,11 +49,12 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_photo, container, false);
-        this.imageTeste = (ImageView) view.findViewById(R.id.image_test);
-//        this.addImageButton = (ImageButton) view.findViewById(R.id.add_image_botton);
+        this.imageView1 = (ImageView) view.findViewById(R.id.image_view1);
+        this.imageView2 = (ImageView) view.findViewById(R.id.image_view2);
+        this.imageView3 = (ImageView) view.findViewById(R.id.image_view3);
+        this.mainPhoto = (ImageView) view.findViewById(R.id.main_photo);
         this.addImageButton = (ImageView) view.findViewById(R.id.add_image_botton);
         this.submitComplaint = (Button) view.findViewById(R.id.submit_complaint);
 
@@ -69,6 +70,52 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
 
             @Override
             public void onClick(View v) {
+            }
+        });
+
+        imageView1.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                ImageView imageView1 = (ImageView) v.findViewById(R.id.image_view1);
+                ImageView imageView2 = (ImageView) v.findViewById(R.id.image_view2);
+                ImageView imageView3 = (ImageView) v.findViewById(R.id.image_view3);
+                ImageView imageViewMain = (ImageView) v.findViewById(R.id.main_photo);
+
+                if (imageView1.getDrawable() == null) {
+                    return false;
+                } else {
+                    imageView1.setImageBitmap(null);
+
+                    if (imageView2.getDrawable() == null) {
+                        imageViewMain.setImageBitmap(null);
+                        return false;
+                    } else {
+                        imageView1.setImageDrawable(imageView2.getDrawable());
+                        if (imageView3.getDrawable() == null) {
+                            imageViewMain.setImageBitmap(null);
+                            return false;
+                        } else {
+                            imageView2.setImageDrawable(imageView3.getDrawable());
+                            imageViewMain.setImageBitmap(null);
+                            return false;
+                        }
+                    }
+                }
+            }
+        });
+
+        imageView2.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
+
+        imageView3.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
             }
         });
 
@@ -88,7 +135,21 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 Bitmap bitmap = (Bitmap) bundle.get("data");
-                this.imageTeste.setImageBitmap(bitmap);
+                this.mainPhoto.setImageBitmap(bitmap);
+
+                if (this.imageView1.getDrawable() == null) {
+                    this.imageView1.setImageBitmap(bitmap);
+                } else {
+                    if (this.imageView2.getDrawable() == null) {
+                        this.imageView2.setImageBitmap(bitmap);
+                    } else {
+                        if (this.imageView3.getDrawable() == null) {
+                            this.imageView3.setImageBitmap(bitmap);
+                            this.addImageButton.setEnabled(false);
+                        }
+                    }
+                }
+
                 view.findViewById(R.id.obs).setEnabled(true);
                 this.submitComplaint.setEnabled(true);
                 this.submitComplaint.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
@@ -96,7 +157,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
         }
     }
 
-    private synchronized void callConnection(){
+    private synchronized void callConnection() {
         mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
                 .addOnConnectionFailedListener(this)
                 .addConnectionCallbacks(this)
@@ -106,37 +167,31 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     //LISTENER
-        @Override
-        public void onConnected(Bundle bundle) {
-//            Log.i("LOG", "onConnected(" + bundle + ")");
+    @Override
+    public void onConnected(Bundle bundle) {
 
-            Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-            if(l != null){
-//                Log.i("LOG", "latitude: "+l.getLatitude());
-//                Log.i("LOG", "longitude: "+l.getLongitude());
-                latitude = (TextView) view.findViewById(R.id.latitude);
-                longitude = (TextView) view.findViewById(R.id.longitude);
+        Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-                String la = " " + l.getLatitude();
-                String lo = " " + l.getLongitude();
+        if (l != null) {
 
-                latitude.setText("Latitude:" + la);
-                longitude.setText("Longitude:" + lo);
+            Double la = l.getLatitude();
+            Double lo = l.getLongitude();
 
-            }
-            else {
-                Toast.makeText(PhotoFragment.this.getContext(), "entrou no else", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(PhotoFragment.this.getContext(), "Conseguiu", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(PhotoFragment.this.getContext(), "GPS desligado", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        @Override
-        public void onConnectionSuspended(int i) {
-            Log.i("LOG", "onConnectionSuspended(" + i + ")");
-        }
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.i("LOG", "onConnectionSuspended(" + i + ")");
+    }
 
-        @Override
-        public void onConnectionFailed(ConnectionResult connectionResult) {
-            Log.i("LOG", "onConnectionFailed("+connectionResult+")");
-        }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i("LOG", "onConnectionFailed(" + connectionResult + ")");
+    }
 }
