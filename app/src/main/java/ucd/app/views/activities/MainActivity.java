@@ -1,6 +1,8 @@
 package ucd.app.views.activities;
 
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -45,5 +47,11 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_tab_place_dark);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_tab_task_dark);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_tab_ranking_dark);
+
+        // Pushing MapView Fragment
+//        Fragment fragment = Fragment.instantiate(this, PlaceFragment.class.getName());
+//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.container, fragment);
+//        fragmentTransaction.commit();
     }
 }
