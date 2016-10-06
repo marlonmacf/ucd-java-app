@@ -178,8 +178,6 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             Double la = l.getLatitude();
             Double lo = l.getLongitude();
 
-            Toast.makeText(PhotoFragment.this.getContext(), "Conseguiu", Toast.LENGTH_SHORT).show();
-
         } else {
             Toast.makeText(PhotoFragment.this.getContext(), "GPS desligado", Toast.LENGTH_SHORT).show();
         }
