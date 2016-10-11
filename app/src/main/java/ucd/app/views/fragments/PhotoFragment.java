@@ -55,12 +55,12 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
         view = inflater.inflate(R.layout.fragment_photo, container, false);
 
         //pega os 3 campos ImageView, o campo da imagem principal, o botão de adicionar e o botão de realizar a denuncia;
-        this.imageView1 = (ImageView) view.findViewById(R.id.image_view1);
-        this.imageView2 = (ImageView) view.findViewById(R.id.image_view2);
-        this.imageView3 = (ImageView) view.findViewById(R.id.image_view3);
-        this.mainPhoto = (ImageView) view.findViewById(R.id.main_photo);
-        this.addImageButton = (ImageView) view.findViewById(R.id.add_image_botton);
-        this.submitComplaint = (Button) view.findViewById(R.id.submit_complaint);
+        imageView1 = (ImageView) view.findViewById(R.id.image_view1);
+        imageView2 = (ImageView) view.findViewById(R.id.image_view2);
+        imageView3 = (ImageView) view.findViewById(R.id.image_view3);
+        mainPhoto = (ImageView) view.findViewById(R.id.main_photo);
+        addImageButton = (ImageView) view.findViewById(R.id.add_image_botton);
+        submitComplaint = (Button) view.findViewById(R.id.submit_complaint);
 
         //coloca um Listner no botão de adicionar a foto;
         addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -123,26 +123,45 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
         imageView1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
                 //se existir imagem no primeiro ImageView;
                 if (imageView1.getDrawable() != null) {
 
-                    //pega a segunda imagem e coloca no lugar da primeira;
-                    BitmapDrawable drawable = (BitmapDrawable) imageView2.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-                    imageView1.setImageBitmap(bitmap);
+                    BitmapDrawable drawable;
+                    Bitmap bitmap;
 
-                    //pega a terceira imagem e coloca no lugar da segunda;
-                    drawable = (BitmapDrawable) imageView3.getDrawable();
-                    bitmap = drawable.getBitmap();
-                    imageView2.setImageBitmap(bitmap);
+                    //limpa o lugar da primeira imagem;
+                    imageView1.setImageBitmap(null);
 
-                    //limpa o lugar da terceira imagem;
-                    imageView3.setImageBitmap(null);
+                    //verifica se há uma segunda imagem;
+                    if (imageView2.getDrawable() != null) {
+
+                        //pega a segunda imagem e coloca no lugar da primeira;
+                        drawable = (BitmapDrawable) imageView2.getDrawable();
+                        bitmap = drawable.getBitmap();
+                        imageView1.setImageBitmap(bitmap);
+
+                        //limpa o lugar da segunda imagem;
+                        imageView2.setImageBitmap(null);
+
+                        //verifica se há uma terceira imagem;
+                        if (imageView3.getDrawable() != null) {
+
+                            //pega a terceira imagem e coloca no lugar da segunda;
+                            drawable = (BitmapDrawable) imageView3.getDrawable();
+                            bitmap = drawable.getBitmap();
+                            imageView2.setImageBitmap(bitmap);
+
+                            //limpa o lugar da terceira imagem;
+                            imageView3.setImageBitmap(null);
+                        }
+                    }
 
                     //coloca a primeira imagem na foto principal;
                     drawable = (BitmapDrawable) imageView1.getDrawable();
                     bitmap = drawable.getBitmap();
                     mainPhoto.setImageBitmap(bitmap);
+                    addImageButton.setEnabled(true);
                 }
                 return true;
             }
@@ -152,18 +171,28 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
         imageView2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
                 //se existir imagem no segundo ImageView;
                 if (imageView2.getDrawable() != null) {
 
-                    //pega a terceira imagem e coloca no lugar da segunda;
-                    BitmapDrawable drawable = (BitmapDrawable) imageView3.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-                    imageView2.setImageBitmap(bitmap);
+                    BitmapDrawable drawable;
+                    Bitmap bitmap;
 
-                    //coloca a primeira imagem na foto principal;
-                    drawable = (BitmapDrawable) imageView1.getDrawable();
-                    bitmap = drawable.getBitmap();
-                    mainPhoto.setImageBitmap(bitmap);
+                    imageView2.setImageBitmap(null);
+
+                    //verifica se há uma terceira imagem;
+                    if(imageView3.getDrawable() != null){
+                        //pega a terceira imagem e coloca no lugar da segunda;
+                        drawable = (BitmapDrawable) imageView3.getDrawable();
+                        bitmap = drawable.getBitmap();
+                        imageView2.setImageBitmap(bitmap);
+
+                        //coloca a primeira imagem na foto principal;
+                        drawable = (BitmapDrawable) imageView1.getDrawable();
+                        bitmap = drawable.getBitmap();
+                        mainPhoto.setImageBitmap(bitmap);
+                        addImageButton.setEnabled(true);
+                    }
                 }
                 return true;
             }
@@ -175,6 +204,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             public boolean onLongClick(View v) {
                 //exclui a terceira imagem;
                 imageView3.setImageBitmap(null);
+                addImageButton.setEnabled(true);
                 return true;
             }
         });
@@ -196,26 +226,24 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 Bitmap bitmap = (Bitmap) bundle.get("data");
-                this.mainPhoto.setImageBitmap(bitmap);
+                mainPhoto.setImageBitmap(bitmap);
 
-                if (this.imageView1.getDrawable() == null) {
-                    this.imageView1.setImageBitmap(bitmap);
+                if (imageView1.getDrawable() == null) {
+                    imageView1.setImageBitmap(bitmap);
                 } else {
-                    if (this.imageView2.getDrawable() == null) {
-                        this.imageView2.setImageBitmap(bitmap);
+                    if (imageView2.getDrawable() == null) {
+                        imageView2.setImageBitmap(bitmap);
                     } else {
-                        if (this.imageView3.getDrawable() == null) {
-                            this.imageView3.setImageBitmap(bitmap);
-                            this.addImageButton.setEnabled(false);
-                        }else{
-                            this.addImageButton.setEnabled(true);
+                        if (imageView3.getDrawable() == null) {
+                            imageView3.setImageBitmap(bitmap);
+                            addImageButton.setEnabled(false);
                         }
                     }
                 }
 
                 view.findViewById(R.id.obs).setEnabled(true);
-                this.submitComplaint.setEnabled(true);
-                this.submitComplaint.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
+                submitComplaint.setEnabled(true);
+                submitComplaint.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
             }
         }
     }

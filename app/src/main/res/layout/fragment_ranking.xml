@@ -14,6 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+            <!-- Barra superior em branco -->
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/bar_top"
                 android:layout_width="match_parent"
@@ -21,6 +22,7 @@
 
             </android.support.v7.widget.CardView>
 
+            <!-- Circulo com a posição do usuario atual -->
             <RelativeLayout
                 android:id="@+id/position"
                 android:layout_width="wrap_content"
@@ -39,6 +41,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1">
 
+                        <!-- Texto da parte de dentro do circulo -->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -54,6 +57,7 @@
 
             </RelativeLayout>
 
+            <!-- Score com os pontos do usuario atual -->
             <RelativeLayout
                 android:id="@+id/score"
                 android:layout_width="match_parent"
@@ -62,6 +66,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="20dp">
 
+                <!-- Score -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -71,6 +76,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
+                <!-- Pontos -->
                 <TextView
                     android:id="@+id/points"
                     android:layout_width="wrap_content"
@@ -81,6 +87,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
+                <!-- pts -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,6 +99,7 @@
 
             </RelativeLayout>
 
+            <!-- ListView com as informações do Ranking -->
             <RelativeLayout
                 android:id="@+id/content"
                 android:layout_width="wrap_content"
@@ -118,6 +126,7 @@
 
     </ScrollView>
 
+    <!-- Circulo de "carregando" -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="@android:style/Widget.ProgressBar"

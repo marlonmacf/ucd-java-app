@@ -55,12 +55,12 @@ public class RankingFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         // Fetching for all users.
-        apiService.fetchUsers().enqueue(new Callback<List<User>>() {
+        apiService.fetchRanking().enqueue(new Callback<List<User>>() {
 
             @Override
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
 
-                // Make a objecto of users and show on the view.
+                // Make a object of users and show on the view.
                 int count = 1;
                 for (User user : response.body()) {
                     values.add((count++) + "º   " + user.getName() + " " + user.getScore() + "pts");
