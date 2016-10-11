@@ -186,6 +186,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                         drawable = (BitmapDrawable) imageView3.getDrawable();
                         bitmap = drawable.getBitmap();
                         imageView2.setImageBitmap(bitmap);
+                        imageView3.setImageBitmap(null);
 
                         //coloca a primeira imagem na foto principal;
                         drawable = (BitmapDrawable) imageView1.getDrawable();
