@@ -36,7 +36,6 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     Button submitComplaint;
     View view;
 
-
     private GoogleApiClient mGoogleApiClient;
 
     public PhotoFragment() {
@@ -157,7 +156,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                         }
                     }
 
-                    if(imageView1.getDrawable() != null){
+                    if (imageView1.getDrawable() != null) {
                         //coloca a primeira imagem na foto principal;
                         drawable = (BitmapDrawable) imageView1.getDrawable();
                         bitmap = drawable.getBitmap();
@@ -165,6 +164,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                         addImageButton.setEnabled(true);
                     } else {
                         mainPhoto.setImageDrawable(null);
+                        submitComplaint.setEnabled(false);
                     }
                 }
                 return true;
@@ -226,8 +226,13 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-        //chama a função para pegar as coordenadas do GPS;
-        callConnection();
+        submitComplaint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //chama a função para pegar as coordenadas do GPS;
+                callConnection();
+            }
+        });
 
         return view;
     }
@@ -286,10 +291,10 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     @Override
     public void onConnected(Bundle bundle) {
 
-
+        //pega a localização do GPS e guarda na variavel 'l';
         Location l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        //entra se conseguir um sinal de GPS
+        //entra se tiver uma localização em 'l'
         if (l != null) {
 
             Double la = l.getLatitude();
