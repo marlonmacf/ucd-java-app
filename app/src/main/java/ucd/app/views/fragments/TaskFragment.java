@@ -33,43 +33,54 @@ public class TaskFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        view = inflater.inflate(R.layout.fragment_task, container, false);// ------------------------------------------------------------------------ Inflate the layout for this fragment
+        //Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_task, container, false);
 
         List<CardView> cardViews = new ArrayList<>();
 
         cardViews.add((CardView) view.findViewById(R.id.card_view_task1));
         cardViews.add((CardView) view.findViewById(R.id.card_view_task2));
 
-        for (final CardView cdview : cardViews) { // ------------------------------------------------------------------------------------------------- Percorre a lista de CheckBox adicionando onClickListener em cada um;
-            cdview.setOnClickListener(new View.OnClickListener() { // -------------------------------------------------------------------------------- Coloca onClickListener em cada CheckBox;
+        //Percorre a lista de CheckBox adicionando onClickListener em cada um;
+        for (final CardView cdview : cardViews) {
+            //Coloca onClickListener em cada CheckBox;
+            cdview.setOnClickListener(new View.OnClickListener() {
                 @Override
 
-                //FUTURAMENTE VERIFICAR SE O CARDVIEW ESTÁ MARCADO OU NÃO !!!!!!!!!!
+                //FUTURAMENTE VERIFICAR SE O CARDVIEW ESTÁ MARCADO OU NÃO NO BANCO!!!!!!!!!!
 
                 public void onClick(View v) {
 
-                    TextView t = (TextView) cdview.getChildAt(0); // --------------------------------------------------------------------------------- Pega o primeiro filho do determinado CardView (um TextView);
-                    String msg = (String) t.getText(); // -------------------------------------------------------------------------------------------- Pega o texto do TextView;
+                    //Pega o primeiro filho do determinado CardView (um TextView);
+                    TextView t = (TextView) cdview.getChildAt(0);
+                    //Pega o texto do TextView;
+                    String msg = (String) t.getText();
 
                     new AlertDialog.Builder(cdview.getContext())
 
                             .setTitle(R.string.task_dialog_title)
                             .setMessage(msg)
-                            .setPositiveButton(R.string.task_dialog_button2, new DialogInterface.OnClickListener() { // ------------------------------ Botão "Sim";
+                                    //Botão "Sim";
+                            .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    cdview.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark)); //----------- Muda a Cor do CardView;
-                                    TextView t = (TextView) cdview.getChildAt(0); // ---------------------------------------------------------------- Pega o TextView do Card;
-                                    t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary)); // ----------------------------- Muda a cor do texto do CardView;
+                                    //Muda a Cor do CardView;
+                                    cdview.setCardBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimaryDark));
+                                    //Pega o TextView do Card;
+                                    TextView t = (TextView) cdview.getChildAt(0);
+                                    //Muda a cor do texto do CardView;
+                                    t.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorPrimary));
                                 }
                             })
-                            .setNegativeButton(R.string.task_dialog_button1, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
+                                    //Botão "Não";
+                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
                             })
-                            .setIcon(android.R.drawable.ic_dialog_alert) // ------------------------------------------------------------------------- Adiciona Icone no AlertDialog;
-                            .show(); // ------------------------------------------------------------------------------------------------------------- Mostra o AlertDialog;
+                                    //Adiciona Icone no AlertDialog;
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                    //Mostra o AlertDialog;
+                            .show();
 
                 }//final do onClick;
 

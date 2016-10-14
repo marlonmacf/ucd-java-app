@@ -20,14 +20,17 @@
     <string name="photo_subHeader_3">Observação</string>
     <string name="photo_lat"> Latitude: </string>
     <string name="photo_lon"> Longitude: </string>
-    <string name="photo_rua"> Rua: </string>
-    <string name="photo_bairro"> Bairro: </string>
-    <string name="photo_cidade"> Cidade: </string>
-    <string name="photo_uf"> UF: </string>
-    <string name="photo_obs_hint">Ex: Terreno baldio, abandonado, com lixo, etc.</string>
 
     <string name="task_dialog_title"> Deseja confirmar esta atividade ? </string>
-    <string name="task_dialog_button1"> Não </string>
-    <string name="task_dialog_button2"> Sim </string>
+
+    <string name="dialog_button_nao"> Não </string>
+    <string name="dialog_button_sim"> Sim </string>
+    <string name="dialog_neutral">Ok</string>
+    <string name="hint_obs">Observações</string>
+    <string name="gps_desligado">Sinal de GPS não encontrado !</string>
+    <string name="status_gps">Certifique-se que o GPS está ligado.</string>
+
+    <string name="photo_complaint_dialog_title"> Deseja confirmar esta atividade ? </string>
+    <string name="photo_remove_dialog_title">Deseja excluir esta imagem ?</string>
 
 </resources>
