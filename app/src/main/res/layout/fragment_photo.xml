@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     tools:context="info.androidhive.materialtabs.fragments.OneFragment">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--android:id="@+id/scroll"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:fillViewport="true">-->
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -45,8 +46,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:id="@+id/add_image_botton"
@@ -98,8 +98,7 @@
                         android:backgroundTint="@color/colorAccent"
                         android:enabled="false"
                         android:text="@string/photo_button"
-                        android:textColor="@color/cardview_light_background"
-                        />
+                        android:textColor="@color/cardview_light_background" />
 
                 </RelativeLayout>
 
@@ -107,6 +106,8 @@
 
         </RelativeLayout>
 
-    </ScrollView>
+    <!--</ScrollView>-->
+
+
 
 </RelativeLayout>

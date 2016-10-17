@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.InputType;
@@ -85,7 +87,6 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-
         //Caso de um click simples na primeira imagem;
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,16 +132,14 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             @Override
             public boolean onLongClick(View v) {
 
+                //se existir imagem no primeiro ImageView;
+                if (imageView1.getDrawable() != null) {
+                    new AlertDialog.Builder(imageView1.getContext())
+                            .setTitle(R.string.photo_remove_dialog_title)
 
-                new AlertDialog.Builder(imageView1.getContext())
-                        .setTitle(R.string.photo_remove_dialog_title)
-
-                                //botão sim;
-                        .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                //se existir imagem no primeiro ImageView;
-                                if (imageView1.getDrawable() != null) {
+                            //botão sim;
+                            .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
                                     BitmapDrawable drawable;
                                     Bitmap bitmap;
@@ -182,19 +181,20 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                         mainPhoto.setImageDrawable(null);
                                         submitComplaint.setEnabled(false);
                                     }
+
+
                                 }
 
-                            }
+                            })
+                            //botão não;
+                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        })
-                                //botão não;
-                        .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                                //motras o AlertDialog;
-                        .show();
+                                }
+                            })
+                            //motras o AlertDialog;
+                            .show();
+                }
                 return true;
             }
 
@@ -205,13 +205,12 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             @Override
             public boolean onLongClick(View v) {
 
-                new AlertDialog.Builder(imageView2.getContext())
-                        .setTitle(R.string.photo_remove_dialog_title)
-                        .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                //se existir imagem no segundo ImageView;
-                                if (imageView2.getDrawable() != null) {
+                //se existir imagem no segundo ImageView;
+                if (imageView2.getDrawable() != null) {
+                    new AlertDialog.Builder(imageView2.getContext())
+                            .setTitle(R.string.photo_remove_dialog_title)
+                            .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
                                     BitmapDrawable drawable;
                                     Bitmap bitmap;
@@ -232,18 +231,20 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                     bitmap = drawable.getBitmap();
                                     mainPhoto.setImageBitmap(bitmap);
                                     addImageButton.setEnabled(true);
+
+
                                 }
 
-                            }
+                            })
+                            //botão "Não";
+                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        })
-                        .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                                //motras o AlertDialog;
-                        .show();
+                                }
+                            })
+                            //motras o AlertDialog;
+                            .show();
+                }
                 return true;
             }
 
@@ -278,13 +279,13 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
 
                             })
 
-                                    //botão não;
+                            //botão não;
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
                             })
-                                    //motras o AlertDialog;
+                            //motras o AlertDialog;
                             .show();
                 }
                 return true;
@@ -322,18 +323,18 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                             .setView(textview_latitude)
                             .setView(textview_longitude)
                             .setView(input)
-                                    //botão sim;
+                            //botão sim;
                             .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
-                                    //botão não;
+                            //botão não;
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
-                                    //mostra o AlertDialog;
+                            //mostra o AlertDialog;
                             .show();
                     //entra no else se não houver sinal de GPS;
                 } else {
@@ -377,6 +378,15 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                 if (imageView1.getDrawable() == null) {
                     //coloca a imagem no primeiro ImageView;
                     imageView1.setImageBitmap(bitmap);
+                    Snackbar bar = Snackbar.make(view, "Clique e segure na foto para excluir.", Snackbar.LENGTH_INDEFINITE)
+                            .setAction(R.string.dialog_neutral, new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // Handle user action
+                                }
+                            });
+
+                    bar.show();
                 } else {
                     //entra no if se não existir imagem na segunda ImageView;
                     if (imageView2.getDrawable() == null) {
