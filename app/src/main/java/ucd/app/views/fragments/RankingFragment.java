@@ -27,13 +27,11 @@ public class RankingFragment extends Fragment {
     private ApiService apiService;
 
     private ProgressBar progressBar;
-
     private ListView listView;
-
     private List<String> values;
 
     public RankingFragment() {
-        // Required empty public constructor
+        // Required empty public constructor.
     }
 
     @Override
@@ -51,7 +49,7 @@ public class RankingFragment extends Fragment {
         this.listView = (ListView) view.findViewById(R.id.ranking_list);
         this.values = new ArrayList<>();
 
-        // Start loading
+        // Start loading.
         progressBar.setVisibility(View.VISIBLE);
 
         // Fetching for all users.
@@ -66,7 +64,7 @@ public class RankingFragment extends Fragment {
                     values.add((count++) + "º   " + user.getName() + " " + user.getScore() + "pts");
                 }
 
-                // Assign adapter to ListView
+                // Assign adapter to ListView.
                 listView.setAdapter(new ArrayAdapter<String>(view.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, values));
 
                 // Finish the loading.

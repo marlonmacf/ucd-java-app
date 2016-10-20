@@ -1,19 +1,15 @@
 package ucd.app.views.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,22 +28,22 @@ import ucd.app.R;
 
 public class PhotoFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    ImageView imageView1;
-    ImageView imageView2;
-    ImageView imageView3;
-    ImageView addImageButton;
-    ImageView mainPhoto;
-    Button submitComplaint;
-    View view;
+    private ImageView imageView1;
+    private ImageView imageView2;
+    private ImageView imageView3;
+    private ImageView addImageButton;
+    private ImageView mainPhoto;
+    private Button submitComplaint;
+    private View rootView;
 
-    Location l;
-    Double la;
-    Double lo;
+    private Location location;
+    private Double latitude;
+    private Double longitude;
 
     private GoogleApiClient mGoogleApiClient;
 
     public PhotoFragment() {
-        // Required empty public constructor
+        // Required empty public constructor.
     }
 
     @Override
@@ -60,18 +54,18 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_photo, container, false);
+        // Inflate the layout for this fragment.
+        rootView = inflater.inflate(R.layout.fragment_photo, container, false);
 
-        //pega os 3 campos ImageView, o campo da imagem principal, o botão de adicionar e o botão de realizar a denuncia;
-        imageView1 = (ImageView) view.findViewById(R.id.image_view1);
-        imageView2 = (ImageView) view.findViewById(R.id.image_view2);
-        imageView3 = (ImageView) view.findViewById(R.id.image_view3);
-        mainPhoto = (ImageView) view.findViewById(R.id.main_photo);
-        addImageButton = (ImageView) view.findViewById(R.id.add_image_botton);
-        submitComplaint = (Button) view.findViewById(R.id.submit_complaint);
+        // Pega os 3 campos ImageView, o campo da imagem principal, o botão de adicionar e o botão de realizar a denuncia.
+        imageView1 = (ImageView) rootView.findViewById(R.id.image_view1);
+        imageView2 = (ImageView) rootView.findViewById(R.id.image_view2);
+        imageView3 = (ImageView) rootView.findViewById(R.id.image_view3);
+        mainPhoto = (ImageView) rootView.findViewById(R.id.main_photo);
+        addImageButton = (ImageView) rootView.findViewById(R.id.add_image_botton);
+        submitComplaint = (Button) rootView.findViewById(R.id.submit_complaint);
 
-        //coloca um Listner no botão de adicionar a foto;
+        // Coloca um Listner no botão de adicionar a foto.
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -87,13 +81,15 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-        //Caso de um click simples na primeira imagem;
+        // Caso de um click simples na primeira imagem.
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //se existir imagem no primeiro ImageView;
+
+                // Se existir imagem no primeiro ImageView.
                 if (imageView1.getDrawable() != null) {
-                    //pega a imagem do primeiro ImageView e coloca como imagem principal;
+
+                    // Pega a imagem do primeiro ImageView e coloca como imagem principal.
                     BitmapDrawable drawable = (BitmapDrawable) imageView1.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     mainPhoto.setImageBitmap(bitmap);
@@ -101,12 +97,13 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-        //Caso de um click simples na segunda imagem;
+        // Caso de um click simples na segunda imagem.
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (imageView2.getDrawable() != null) {
-                    //pega a imagem do segundo ImageView e coloca como imagem principal;
+
+                    // Pega a imagem do segundo ImageView e coloca como imagem principal.
                     BitmapDrawable drawable = (BitmapDrawable) imageView2.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     mainPhoto.setImageBitmap(bitmap);
@@ -114,12 +111,13 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-        //Caso de um click simples na terceira imagem;
+        // Caso de um click simples na terceira imagem.
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (imageView3.getDrawable() != null) {
-                    //pega a imagem do terceiro ImageView e coloca como imagem principal;
+
+                    // Pega a imagem do terceiro ImageView e coloca como imagem principal.
                     BitmapDrawable drawable = (BitmapDrawable) imageView3.getDrawable();
                     Bitmap bitmap = drawable.getBitmap();
                     mainPhoto.setImageBitmap(bitmap);
@@ -127,52 +125,50 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             }
         });
 
-        //Caso de um click longo na primeira imagem;
         imageView1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                //se existir imagem no primeiro ImageView;
+                // Se existir imagem no primeiro ImageView.
                 if (imageView1.getDrawable() != null) {
                     new AlertDialog.Builder(imageView1.getContext())
                             .setTitle(R.string.photo_remove_dialog_title)
-
-                            //botão sim;
                             .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     BitmapDrawable drawable;
                                     Bitmap bitmap;
 
-                                    //limpa o lugar da primeira imagem;
+                                    // Limpa o lugar da primeira imagem.
                                     imageView1.setImageDrawable(null);
 
-                                    //verifica se há uma segunda imagem;
+                                    // Verifica se há uma segunda imagem.
                                     if (imageView2.getDrawable() != null) {
 
-                                        //pega a segunda imagem e coloca no lugar da primeira;
+                                        // Pega a segunda imagem e coloca no lugar da primeira.
                                         drawable = (BitmapDrawable) imageView2.getDrawable();
                                         bitmap = drawable.getBitmap();
                                         imageView1.setImageBitmap(bitmap);
 
-                                        //limpa o lugar da segunda imagem;
+                                        // Limpa o lugar da segunda imagem.
                                         imageView2.setImageDrawable(null);
 
-                                        //verifica se há uma terceira imagem;
+                                        // Verifica se há uma terceira imagem.
                                         if (imageView3.getDrawable() != null) {
 
-                                            //pega a terceira imagem e coloca no lugar da segunda;
+                                            // Pega a terceira imagem e coloca no lugar da segunda.
                                             drawable = (BitmapDrawable) imageView3.getDrawable();
                                             bitmap = drawable.getBitmap();
                                             imageView2.setImageBitmap(bitmap);
 
-                                            //limpa o lugar da terceira imagem;
+                                            // Limpa o lugar da terceira imagem.
                                             imageView3.setImageDrawable(null);
                                         }
                                     }
 
                                     if (imageView1.getDrawable() != null) {
-                                        //coloca a primeira imagem na foto principal;
+
+                                        // Coloca a primeira imagem na foto principal.
                                         drawable = (BitmapDrawable) imageView1.getDrawable();
                                         bitmap = drawable.getBitmap();
                                         mainPhoto.setImageBitmap(bitmap);
@@ -181,31 +177,23 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                         mainPhoto.setImageDrawable(null);
                                         submitComplaint.setEnabled(false);
                                     }
-
-
                                 }
-
                             })
-                            //botão não;
-                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() { // ----------------------------- Botão "Não";
+                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
                                 }
                             })
-                            //motras o AlertDialog;
                             .show();
                 }
                 return true;
             }
-
         });
 
-        //Caso de um click longo na segunda imagem;
         imageView2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                //se existir imagem no segundo ImageView;
+                // Se existir imagem no segundo ImageView.
                 if (imageView2.getDrawable() != null) {
                     new AlertDialog.Builder(imageView2.getContext())
                             .setTitle(R.string.photo_remove_dialog_title)
@@ -217,7 +205,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
 
                                     imageView2.setImageDrawable(null);
 
-                                    //verifica se há uma terceira imagem;
+                                    // Verifica se há uma terceira imagem.
                                     if (imageView3.getDrawable() != null) {
                                         //pega a terceira imagem e coloca no lugar da segunda;
                                         drawable = (BitmapDrawable) imageView3.getDrawable();
@@ -226,7 +214,7 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                         imageView3.setImageDrawable(null);
                                     }
 
-                                    //coloca a primeira imagem na foto principal;
+                                    // Coloca a primeira imagem na foto principal.
                                     drawable = (BitmapDrawable) imageView1.getDrawable();
                                     bitmap = drawable.getBitmap();
                                     mainPhoto.setImageBitmap(bitmap);
@@ -236,26 +224,22 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                 }
 
                             })
-                            //botão "Não";
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
                             })
-                            //motras o AlertDialog;
                             .show();
                 }
                 return true;
             }
-
         });
 
-        //Caso de um click longo na terceira imagem;
         imageView3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                //se existir imagem no segundo ImageView;
+                // Se existir imagem no segundo ImageView.
                 if (imageView3.getDrawable() != null) {
                     new AlertDialog.Builder(imageView3.getContext())
                             .setTitle(R.string.photo_remove_dialog_title)
@@ -267,55 +251,50 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                                     BitmapDrawable drawable;
                                     Bitmap bitmap;
 
-                                    //coloca a primeira imagem na foto principal;
+                                    // Coloca a primeira imagem na foto principal.
                                     drawable = (BitmapDrawable) imageView1.getDrawable();
                                     bitmap = drawable.getBitmap();
                                     mainPhoto.setImageBitmap(bitmap);
 
-                                    //exclui a terceira imagem;
+                                    // Exclui a terceira imagem.
                                     imageView3.setImageDrawable(null);
                                     addImageButton.setEnabled(true);
                                 }
 
                             })
-
-                            //botão não;
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
                             })
-                            //motras o AlertDialog;
                             .show();
                 }
                 return true;
             }
-
         });
 
         submitComplaint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //chama a função para pegar as coordenadas do GPS;
+
+                // Chama a função para pegar as coordenadas do GPS.
                 callConnection();
 
-                //entra se tiver sinal do GPS;
-                if (l != null) {
+                if (location != null) {
 
-                    //VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW NO ALERTDIALOG)
+                    // TODO:VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW NO ALERTDIALOG)
                     final TextView textview_latitude = new TextView(v.getContext());
-                    textview_latitude.setText(la.toString());
+                    textview_latitude.setText(latitude.toString());
 
-                    //VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW TEXTVIEW NO ALERTDIALOG)
+                    // TODO:VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW TEXTVIEW NO ALERTDIALOG)
                     final TextView textview_longitude = new TextView(v.getContext());
-                    textview_longitude.setText(lo.toString());
+                    textview_longitude.setText(longitude.toString());
 
                     final EditText input = new EditText(v.getContext());
-                    //define que ele receberá uma entrada do tipo text;
+
+                    // Define que ele receberá uma entrada do tipo text, o hint(dica) e limita o tamanho máximo.
                     input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    //define o hint (dica);
                     input.setHint(R.string.hint_obs);
-                    //limita o tamanho maximo;
                     input.setMaxWidth(100);
 
                     new AlertDialog.Builder(submitComplaint.getContext())
@@ -323,47 +302,35 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                             .setView(textview_latitude)
                             .setView(textview_longitude)
                             .setView(input)
-                            //botão sim;
                             .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
-                            //botão não;
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             })
-                            //mostra o AlertDialog;
                             .show();
-                    //entra no else se não houver sinal de GPS;
                 } else {
-                    new AlertDialog.Builder(submitComplaint.getContext())
-                            .setTitle(R.string.gps_desligado)
-                            .setMessage(R.string.status_gps)
-
-                            .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                    showGpsErrorMessage(submitComplaint.getContext());
                 }
-
             }
-
         });
 
-        return view;
+        return rootView;
     }
 
-    public void imageCapture(View view) {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivityForResult(intent, 0);
-    }
-
+    /**
+     * Método chamado após tirar uma foto. Ele gerencia qual será a imagem principale a as posições das imagens nos imageViews:
+     * Se não existir imagem no primeiro ImageView; Coloca a imagem no primeiro ImageView.
+     * Se não existir imagem na segunda ImageView: Coloca a imagem no segundo ImageView.
+     * Se não existir imagem na terceira ImageView: Coloca a imagem no terceiro ImageView e desabilita o botao que adiciona fotos.
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
@@ -371,67 +338,40 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             if (bundle != null) {
                 Bitmap bitmap = (Bitmap) bundle.get("data");
 
-                //coloca a imagem recém-tirada como imagem principal;
+                // Coloca a imagem recém-tirada como imagem principal.
                 mainPhoto.setImageBitmap(bitmap);
 
-                //entra no if se não existir imagem no primeiro ImageView;
+                // Gerencia a posição das imagens nos imagens views.
                 if (imageView1.getDrawable() == null) {
-                    //coloca a imagem no primeiro ImageView;
                     imageView1.setImageBitmap(bitmap);
-                    Snackbar bar = Snackbar.make(view, "Clique e segure na foto para excluir.", Snackbar.LENGTH_INDEFINITE)
-                            .setAction(R.string.dialog_neutral, new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Handle user action
-                                }
-                            });
-
-                    bar.show();
-                } else {
-                    //entra no if se não existir imagem na segunda ImageView;
-                    if (imageView2.getDrawable() == null) {
-                        //coloca a imagem no segundo ImageView;
-                        imageView2.setImageBitmap(bitmap);
-                    } else {
-                        //entra no if se não existir imagem na terceira ImageView;
-                        if (imageView3.getDrawable() == null) {
-                            //coloca a imagem no terceiro ImageView;
-                            imageView3.setImageBitmap(bitmap);
-                            //desabilita o botao que adiciona fotos;
-                            addImageButton.setEnabled(false);
-                        }
-                    }
+                    showBarMessage(rootView);
+                } else if (imageView2.getDrawable() == null) {
+                    imageView2.setImageBitmap(bitmap);
+                } else if (imageView3.getDrawable() == null) {
+                    imageView3.setImageBitmap(bitmap);
+                    addImageButton.setEnabled(false);
                 }
-
-                //habilita o botão de realizar denuncias;
-                submitComplaint.setEnabled(true);
-
             }
         }
+
+        // Habilita o botão de realizar denuncias.
+        submitComplaint.setEnabled(true);
     }
 
-    private synchronized void callConnection() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
-
-    //LISTENER GPS
+    /**
+     * Listener GPS.
+     *
+     * @param bundle
+     */
     @Override
     public void onConnected(Bundle bundle) {
 
-        //pega a localização do GPS e guarda na variavel 'l';
-        l = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        // Pega a localização do GPS e guarda na variavel 'location';
+        location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
-        //entra se tiver uma localização em 'l'
-        if (l != null) {
-
-            la = l.getLatitude();
-            lo = l.getLongitude();
-
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
         }
     }
 
@@ -443,5 +383,60 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i("LOG", "onConnectionFailed(" + connectionResult + ")");
+    }
+
+    /**
+     * Mostra menssagem de error se o GPS estiver desligado.
+     *
+     * @param context
+     */
+    public void showGpsErrorMessage(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.gps_desligado)
+                .setMessage(R.string.status_gps)
+
+                .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    /**
+     * Método que chama a camera apara capturar uma foto.
+     *
+     * @param view
+     */
+    public void imageCapture(View view) {
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivityForResult(intent, 0);
+    }
+
+    /**
+     * Mostra menssagem demonstrativa de como excluir as imagens.
+     *
+     * @param view
+     */
+    private void showBarMessage(View view) {
+        Snackbar bar = Snackbar.make(view, "Clique e segure na foto para excluir.", Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.dialog_neutral, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Handle user action
+                    }
+                });
+        bar.show();
+    }
+
+    private synchronized void callConnection() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
+                .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+        mGoogleApiClient.connect();
     }
 }
