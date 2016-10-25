@@ -43,10 +43,11 @@
 
                         <!-- Texto da parte de dentro do circulo -->
                         <TextView
+                            android:id="@+id/scorePosition"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="99º"
+                            android:text="º-º"
                             android:textColor="@color/colorForeground"
                             android:textSize="50sp"
                             android:textStyle="bold" />
@@ -70,19 +71,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/points"
-                    android:text="Score"
+                    android:layout_toLeftOf="@+id/scorePoints"
+                    android:text="Score "
                     android:textColor="@color/colorForeground"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <!-- Pontos -->
                 <TextView
-                    android:id="@+id/points"
+                    android:id="@+id/scorePoints"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text=" 99999 "
+                    android:text="is sad"
                     android:textColor="@color/colorAccent"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -91,8 +92,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/points"
-                    android:text="pts"
+                    android:layout_toRightOf="@+id/scorePoints"
+                    android:text=" pts"
                     android:textColor="@color/colorForeground"
                     android:textSize="13sp"
                     android:textStyle="bold" />
