@@ -1,17 +1,14 @@
 package ucd.app.views.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +17,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-
 import ucd.app.R;
 
-public class PhotoFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import static ucd.app.views.activities.MainActivity.latitude;
+import static ucd.app.views.activities.MainActivity.location;
+import static ucd.app.views.activities.MainActivity.longitude;
+
+public class PhotoFragment extends Fragment {
 
     private ImageView imageView1;
     private ImageView imageView2;
@@ -35,12 +32,6 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     private ImageView mainPhoto;
     private Button submitComplaint;
     private View rootView;
-
-    private Location location;
-    private Double latitude;
-    private Double longitude;
-
-    private GoogleApiClient mGoogleApiClient;
 
     public PhotoFragment() {
         // Required empty public constructor.
@@ -277,44 +268,36 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
             @Override
             public void onClick(View v) {
 
-                // Chama a função para pegar as coordenadas do GPS.
-                callConnection();
+                final TextView textview_latitude = new TextView(v.getContext());
+                final TextView textview_longitude = new TextView(v.getContext());
 
                 if (location != null) {
-
-                    // TODO:VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW NO ALERTDIALOG)
-                    final TextView textview_latitude = new TextView(v.getContext());
                     textview_latitude.setText(latitude.toString());
-
-                    // TODO:VERIFICAR ESTA PARTE ! (NÃO ESTA APARECENDO OS TEXTVIEW TEXTVIEW NO ALERTDIALOG)
-                    final TextView textview_longitude = new TextView(v.getContext());
                     textview_longitude.setText(longitude.toString());
-
-                    final EditText input = new EditText(v.getContext());
-
-                    // Define que ele receberá uma entrada do tipo text, o hint(dica) e limita o tamanho máximo.
-                    input.setInputType(InputType.TYPE_CLASS_TEXT);
-                    input.setHint(R.string.hint_obs);
-                    input.setMaxWidth(100);
-
-                    new AlertDialog.Builder(submitComplaint.getContext())
-                            .setTitle(R.string.photo_complaint_dialog_title)
-                            .setView(textview_latitude)
-                            .setView(textview_longitude)
-                            .setView(input)
-                            .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
-                } else {
-                    showGpsErrorMessage(submitComplaint.getContext());
                 }
+
+                final EditText input = new EditText(v.getContext());
+
+                // Define que ele receberá uma entrada do tipo text, o hint(dica) e limita o tamanho máximo.
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setHint(R.string.hint_obs);
+                input.setMaxWidth(100);
+
+                new AlertDialog.Builder(submitComplaint.getContext())
+                        .setTitle(R.string.photo_complaint_dialog_title)
+                        .setView(textview_latitude)
+                        .setView(textview_longitude)
+                        .setView(input)
+                        .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
             }
         });
 
@@ -359,53 +342,6 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
     }
 
     /**
-     * Listener GPS.
-     *
-     * @param bundle
-     */
-    @Override
-    public void onConnected(Bundle bundle) {
-
-        // Pega a localização do GPS e guarda na variavel 'location';
-        location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
-        if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i("LOG", "onConnectionSuspended(" + i + ")");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i("LOG", "onConnectionFailed(" + connectionResult + ")");
-    }
-
-    /**
-     * Mostra menssagem de error se o GPS estiver desligado.
-     *
-     * @param context
-     */
-    public void showGpsErrorMessage(Context context) {
-        new AlertDialog.Builder(context)
-                .setTitle(R.string.gps_desligado)
-                .setMessage(R.string.status_gps)
-
-                .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-    }
-
-    /**
      * Método que chama a camera apara capturar uma foto.
      *
      * @param view
@@ -429,14 +365,5 @@ public class PhotoFragment extends Fragment implements GoogleApiClient.Connectio
                     }
                 });
         bar.show();
-    }
-
-    private synchronized void callConnection() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this.getContext())
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
     }
 }

@@ -1,18 +1,11 @@
 package ucd.app.views.fragments;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,17 +17,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import ucd.app.R;
 
-public class PlaceFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+import static ucd.app.views.activities.MainActivity.latitude;
+import static ucd.app.views.activities.MainActivity.location;
+import static ucd.app.views.activities.MainActivity.longitude;
+
+public class PlaceFragment extends Fragment {
 
     private GoogleMap googleMap;
     private MapView googleMapView;
-    private GoogleApiClient googleApiClient;
-
-    private Location location;
-    private Double longitude;
-    private Double latitude;
-
-
 
     public PlaceFragment() {
         // Required empty public constructor.
@@ -57,8 +47,6 @@ public class PlaceFragment extends Fragment implements GoogleApiClient.Connectio
         MapsInitializer.initialize(rootView.getContext());
         googleMapView.onResume();
 
-        callConnection();
-
         googleMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -69,10 +57,12 @@ public class PlaceFragment extends Fragment implements GoogleApiClient.Connectio
                 // For dropping a marker at a point on the Map.
                 googleMap.addMarker(new MarkerOptions().position(new LatLng(-19.7155493, -47.9670743)).title("Marker Title").snippet("Marker Description"));
 
-                // For zooming automatically to the location of the marker
-                // TODO: Change this usage to get the latitude and longitude from the current location.
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(-19.7155493, -47.9670743)).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                if (location != null) {
+
+                    // For zooming automatically to the location of the marker
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(12).build();
+                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                }
             }
         });
 
@@ -101,44 +91,5 @@ public class PlaceFragment extends Fragment implements GoogleApiClient.Connectio
     public void onLowMemory() {
         super.onLowMemory();
         googleMapView.onLowMemory();
-    }
-
-    /**
-     * Listener GPS. Pega a localização do GPS.
-     *
-     * @param bundle
-     */
-    @Override
-    public void onConnected(Bundle bundle) {
-        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-
-        if (location == null) {
-
-            // TODO: Change this for a more friendly message...
-            Toast.makeText(this.getContext(), "Location is missing! Verify your GPS.", Toast.LENGTH_SHORT).show();
-        } else {
-
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.i("LOG", "onConnectionSuspended(" + i + ")");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i("LOG", "onConnectionFailed(" + connectionResult + ")");
-    }
-
-    private synchronized void callConnection() {
-        googleApiClient = new GoogleApiClient.Builder(this.getContext())
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
-                .addApi(LocationServices.API)
-                .build();
-        googleApiClient.connect();
     }
 }
