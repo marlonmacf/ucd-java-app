@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">"Unidos Contra a Dengue"</string>
 
-    <string name="title_info"> Informativo </string>
-
     <string name="info_card_1"> Mantenha a caixa d\'agua sempre fechada com tampa adequada </string>
     <string name="info_card_2"> Remova folhas, galhos e tudo que possa impedir a água de correr pelas calhas </string>
     <string name="info_card_3"> Não deixe a água da chuva acumulada sobre a laje </string>
@@ -32,5 +30,11 @@
 
     <string name="photo_complaint_dialog_title"> Deseja confirmar esta atividade ? </string>
     <string name="photo_remove_dialog_title">Deseja excluir esta imagem ?</string>
+
+    <string name="title_activity_login_activity">login_activity</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="label_password">Senha</string>
+    <string name="label_email">Email</string>
+    <string name="label_new_account">Criar uma nova conta</string>
 
 </resources>

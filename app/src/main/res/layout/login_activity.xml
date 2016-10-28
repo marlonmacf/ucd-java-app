@@ -1,0 +1,66 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".views.activities.login_activity">
+
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="45dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo"
+            android:hint="@string/label_email"
+            android:textAlignment="center"
+            />
+
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email"
+            android:hint="@string/label_password"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btn_entrar"
+            android:layout_width="165dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/password"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn"
+            android:text="@string/btn_entrar"
+            android:textColor="@color/cardview_light_background" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/btn_entrar"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_new_account"
+            android:textSize="10dp" />
+
+        <!-- TODO Button to log with Facebook and G+ -->
+
+    </RelativeLayout>
+
+
+</FrameLayout>
