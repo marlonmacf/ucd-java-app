@@ -33,7 +33,7 @@
             android:value="AIzaSyCuW5MM2xsQB4zjGyoP-YclNcAG97bUnLI" />
 
         <!-- Main Activity -->
-        <activity android:name=".views.activities.MainActivity">
+        <activity android:name=".views.activities.login_activity">
 
             <!-- Default intent filter -->
             <intent-filter>
@@ -55,11 +55,7 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".views.activities.login_activity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_login_activity"
-            android:theme="@style/FullscreenTheme"></activity>
+        <activity android:name=".views.activities.MainActivity"/>
     </application>
 
 </manifest>

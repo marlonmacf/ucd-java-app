@@ -26,7 +26,7 @@
     <string name="dialog_neutral">Ok</string>
     <string name="hint_obs">Observações</string>
     <string name="gps_desligado">Sinal de GPS não encontrado !</string>
-    <string name="status_gps">Certifique-se que o GPS está ligado.</string>
+    <string name="status_gps">Certifique-se que o GPS está ligado para usar todas as funções.</string>
 
     <string name="photo_complaint_dialog_title"> Deseja confirmar esta atividade ? </string>
     <string name="photo_remove_dialog_title">Deseja excluir esta imagem ?</string>
