@@ -55,7 +55,8 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.MainActivity"/>
+        <activity android:name=".views.activities.MainActivity" />
+        <activity android:name=".views.activities.register_acitivity"></activity>
     </application>
 
 </manifest>

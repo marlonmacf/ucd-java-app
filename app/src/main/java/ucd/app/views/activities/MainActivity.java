@@ -3,6 +3,7 @@ package ucd.app.views.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static User loggedUser;
     public static List<Complaint> complaints;
 
+    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_tab_place_dark);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_tab_task_dark);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_tab_ranking_dark);
+
     }
 
     /**
@@ -115,7 +119,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     private void createUser() {
-        loggedUser = new User(1, "Marlon Andrel", "marlonmacf@gmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("99"));
+        loggedUser = (User) getIntent().getSerializableExtra("pessoas");
+//        loggedUser = new User(1, "Marlon Andrel", "marlonmacf@gmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("99"));
     }
 
     /**

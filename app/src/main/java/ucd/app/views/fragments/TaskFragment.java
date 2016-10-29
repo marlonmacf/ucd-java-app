@@ -42,7 +42,7 @@ public class TaskFragment extends Fragment {
         // Adicionando onClickListener para todos os CheckBoxes.
         for (final CardView cdview : cardViews) {
 
-            // TODO:FUTURAMENTE VERIFICAR SE O CARDVIEW ESTÁ MARCADO OU NÃO NO BANCO!!!!!!!!!!
+            // TODO: Futuramente verificar se o cardview está marcado ou não no banco.
             cdview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

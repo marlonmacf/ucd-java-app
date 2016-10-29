@@ -10,10 +10,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,13 +60,14 @@ public class RankingFragment extends Fragment {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
 
                 // Make a object of users and show on the view.
+                // TODO: Debugar for. Posição do usuário no ranking errada.
                 int count = 1;
                 for (User user : response.body()) {
                     if(user.getId().equals(loggedUser.getId())){
                         TextView scorePosition = (TextView) rootView.findViewById(R.id.scorePosition);
                         TextView scorePoints = (TextView) rootView.findViewById(R.id.scorePoints);
                         String position = count + "º";
-                        String points = user.getScore().toString();
+                        String points = loggedUser.getScore().toString();
                         scorePosition.setText(position);
                         scorePoints.setText(points);
                     }

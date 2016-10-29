@@ -33,8 +33,15 @@
 
     <string name="title_activity_login_activity">login_activity</string>
     <string name="btn_entrar">Entrar</string>
+    <string name="btn_cadastrar">Cadastrar</string>
     <string name="label_password">Senha</string>
     <string name="label_email">Email</string>
+    <string name="label_name">Nome</string>
     <string name="label_new_account">Criar uma nova conta</string>
+
+    <string name="login_fail">Falha ao logar!</string>
+    <string name="login_fail_msg">Email ou senha inválido, tente novamente.</string>
+    <string name="easter_2">is nothing but 0</string>
+    <string name="easter_1">º-º</string>
 
 </resources>
