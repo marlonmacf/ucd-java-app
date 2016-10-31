@@ -43,5 +43,5 @@ public interface ApiService {
     Call<List<User>> fetchRanking();
 
     @GET("/login")
-    Call<User> login(@Path("email") String email, @Path("password") String password);
+    Call<User> login(@Query("email") String email, @Query("password") String password);
 }

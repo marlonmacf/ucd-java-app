@@ -20,7 +20,7 @@ import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
-import static ucd.app.views.activities.MainActivity.loggedUser;
+import static ucd.app.views.activities.login_activity.loggedUser;
 
 public class RankingFragment extends Fragment {
 
@@ -60,14 +60,13 @@ public class RankingFragment extends Fragment {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
 
                 // Make a object of users and show on the view.
-                // TODO: Debugar for. Posição do usuário no ranking errada.
                 int count = 1;
                 for (User user : response.body()) {
-                    if(user.getId().equals(loggedUser.getId())){
+                    if(user.getId().equals(loggedUser.getId())) {
                         TextView scorePosition = (TextView) rootView.findViewById(R.id.scorePosition);
                         TextView scorePoints = (TextView) rootView.findViewById(R.id.scorePoints);
                         String position = count + "º";
-                        String points = loggedUser.getScore().toString();
+                        String points = user.getScore().toString();
                         scorePosition.setText(position);
                         scorePoints.setText(points);
                     }

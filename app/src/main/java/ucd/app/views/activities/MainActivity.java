@@ -1,26 +1,24 @@
 package ucd.app.views.activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.List;
-
 import ucd.app.R;
-import ucd.app.entities.Complaint;
 import ucd.app.entities.User;
 import ucd.app.views.adapters.ViewPagerAdapter;
 import ucd.app.views.fragments.InfoFragment;
@@ -42,10 +40,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static Location location;
     public static Double latitude;
     public static Double longitude;
-    public static User loggedUser;
-    public static List<Complaint> complaints;
-
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         // Chama a função para pegar as coordenadas do GPS.
         callConnection();
-        createUser();
 
         // Booting the elements for the TabLayout in the Toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void onConnected(Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            showGpsErrorMessage(MainActivity.this);
+            return;
+        }
         location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
         if (location == null) {
@@ -116,11 +113,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
-    }
-
-    private void createUser() {
-        loggedUser = (User) getIntent().getSerializableExtra("pessoas");
-//        loggedUser = new User(1, "Marlon Andrel", "marlonmacf@gmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("99"));
     }
 
     /**
