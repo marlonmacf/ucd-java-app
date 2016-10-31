@@ -44,4 +44,9 @@
     <string name="easter_2">is nothing but 0</string>
     <string name="easter_1">º-º</string>
 
+    <string name="task_card_1">Preencha todos os vasos de planta com areia.</string>
+    <string name="task_card_2">Vire todas as embalagens que possam armazenar água (baldes, garrafas, etc) com a boca para baixo.</string>
+    <string name="task_card_3">Verifique pneus e entulhos.</string>
+    <string name="task_card_4">Verifique o lixo para possiveis fócos.</string>
+
 </resources>

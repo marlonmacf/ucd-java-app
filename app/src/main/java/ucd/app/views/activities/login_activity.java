@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
 import ucd.app.R;
 import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
@@ -37,6 +39,7 @@ public class login_activity extends AppCompatActivity implements Serializable {
 
         pessoas.add(new User(1, "Marlon", "marlonmacf@gmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("26")));
         pessoas.add(new User(1, "Iago", "iago.olvr@gmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("18")));
+        pessoas.add(new User(1, "Bruna", "brunabdrg@hotmail.com", "123456", Byte.parseByte("2"), Byte.parseByte("0")));
 
 //        TODO: Verificar o WebService. Rota "/login" não passa nenhum parametro;
 //        apiService.login(email, password).enqueue(new Callback<User>() {
@@ -61,35 +64,39 @@ public class login_activity extends AppCompatActivity implements Serializable {
         password = ((EditText) findViewById(R.id.password)).getText().toString();
 
         /**
-         * Verifica se é o 1º usuario (Marlon) ou 2º usuario (Iago).
+         * Verifica se é o 1º usuario (Marlon), o 2º usuario (Iago) ou o 3º usuario (Bruna).
          * Verifição statica.
          * Caso nenhum abre o AlertDialog.
          */
         if (email.equals(pessoas.get(0).getEmail()) && password.equals(pessoas.get(0).getPassword())) {
             Intent it = new Intent(this, MainActivity.class);
-            Bundle bundle = new Bundle();
             it.putExtra("pessoas", pessoas.get(0));
             startActivity(it);
         } else {
             if (email.equals(pessoas.get(1).getEmail()) && password.equals(pessoas.get(1).getPassword())) {
                 Intent it = new Intent(this, MainActivity.class);
-                Bundle bundle = new Bundle();
                 it.putExtra("pessoas", pessoas.get(1));
                 startActivity(it);
             } else {
-                new AlertDialog.Builder(v.getContext())
-                        .setTitle(R.string.login_fail)
-                        .setMessage(R.string.login_fail_msg)
-                        .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
-                        .show();
+                if (email.equals(pessoas.get(2).getEmail()) && password.equals(pessoas.get(2).getPassword())) {
+                    Intent it = new Intent(this, MainActivity.class);
+                    it.putExtra("pessoas", pessoas.get(2));
+                    startActivity(it);
+                } else {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle(R.string.login_fail)
+                            .setMessage(R.string.login_fail_msg)
+                            .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .show();
+                }
             }
         }
     }
 
-    public void btn_register(View v){
+    public void btn_register(View v) {
         Intent it = new Intent(this, register_acitivity.class);
         startActivity(it);
     }

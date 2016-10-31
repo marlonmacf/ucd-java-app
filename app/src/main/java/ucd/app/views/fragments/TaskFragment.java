@@ -9,6 +9,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class TaskFragment extends Fragment {
         List<CardView> cardViews = new ArrayList<>();
         cardViews.add((CardView) rootView.findViewById(R.id.card_view_task1));
         cardViews.add((CardView) rootView.findViewById(R.id.card_view_task2));
+        cardViews.add((CardView) rootView.findViewById(R.id.card_view_task3));
+        cardViews.add((CardView) rootView.findViewById(R.id.card_view_task4));
 
         // Adicionando onClickListener para todos os CheckBoxes.
         for (final CardView cdview : cardViews) {
@@ -46,8 +49,9 @@ public class TaskFragment extends Fragment {
             cdview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView t = (TextView) cdview.getChildAt(0);
+                    TextView t = (TextView) cdview.getChildAt(1);
                     String msg = (String) t.getText();
+                    final CheckBox ck = (CheckBox) cdview.getChildAt(0);
 
                     new AlertDialog.Builder(cdview.getContext())
 
@@ -58,6 +62,7 @@ public class TaskFragment extends Fragment {
                                     cdview.setCardBackgroundColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimaryDark));
                                     TextView t = (TextView) cdview.getChildAt(0);
                                     t.setTextColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimary));
+                                    ck.setChecked(true);
                                 }
                             })
                             .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
