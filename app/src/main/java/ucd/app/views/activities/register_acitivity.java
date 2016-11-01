@@ -12,17 +12,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
+import java.io.Serializable;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ucd.app.R;
 import ucd.app.entities.User;
+import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
-public class register_acitivity extends AppCompatActivity {
+public class register_acitivity extends AppCompatActivity implements Serializable {
 
-//    insert(String email, String name, String password, Boolean inspector, Byte score);
-//    insertUser
 
     private ProgressBar progressBar;
 
@@ -35,27 +36,37 @@ public class register_acitivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.register_acitivity);
-
+        apiService = ApiClient.getClient().create(ApiService.class);
         this.progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
 
         // Finish the loading.
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    public void btn_register(final View view){
+    public void btn_register(final View view) {
         // Start loading.
         progressBar.setVisibility(View.VISIBLE);
 
-        String name = ((EditText) findViewById(R.id.name)).getText().toString();
-        String email = ((EditText) findViewById(R.id.email)).getText().toString();
-        String password = ((EditText) findViewById(R.id.password)).getText().toString();
-        Boolean inspector = ((CheckBox) findViewById(R.id.ck_inspector)).isChecked();
+        int inspec;
 
-        apiService.insertUser(email, name, password, inspector).enqueue(new Callback<User>() {
+        final String name = ((EditText) findViewById(R.id.name)).getText().toString();
+        final String email = ((EditText) findViewById(R.id.email)).getText().toString();
+        final String password = ((EditText) findViewById(R.id.password)).getText().toString();
+        final Boolean inspector = ((CheckBox) findViewById(R.id.ck_inspector)).isChecked();
+
+        if (inspector) {
+            inspec = 1;
+        } else {
+            inspec = 0;
+        }
+
+        byte score = 0;
+
+        apiService.insertUser(email, name, password, inspec, score).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 loggedUser = response.body();
-                Intent intent = new Intent(view.getContext(), MainActivity.class);
+                Intent intent = new Intent(view.getContext(), login_activity.class);
 
                 // Finish the loading.
                 progressBar.setVisibility(View.INVISIBLE);
@@ -70,8 +81,8 @@ public class register_acitivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
 
                 new AlertDialog.Builder(view.getContext())
-                        .setTitle(R.string.register_fail)
-                        .setMessage(R.string.register_fail_msg)
+                        .setTitle(R.string.login_fail)
+                        .setMessage(R.string.login_fail_msg)
                         .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -80,4 +91,6 @@ public class register_acitivity extends AppCompatActivity {
             }
         });
     }
+
 }
+
