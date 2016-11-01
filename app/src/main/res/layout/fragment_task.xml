@@ -26,7 +26,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/txt_view1"
@@ -58,7 +59,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/txt_view2"
@@ -90,7 +92,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/txt_view3"
@@ -122,7 +125,8 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/txt_view4"
@@ -135,7 +139,8 @@
                 android:paddingTop="10dp"
                 android:text="@string/task_card_4"
                 android:textSize="15dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"/>
 
 
         </android.support.v7.widget.CardView>

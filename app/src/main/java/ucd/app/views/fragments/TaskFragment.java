@@ -60,8 +60,8 @@ public class TaskFragment extends Fragment {
                             .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     cdview.setCardBackgroundColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimaryDark));
-                                    TextView t = (TextView) cdview.getChildAt(0);
-                                    t.setTextColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimary));
+                                    TextView text = (TextView) cdview.getChildAt(0);
+                                    text.setTextColor(R.color.colorPrimary);
                                     ck.setChecked(true);
                                 }
                             })
