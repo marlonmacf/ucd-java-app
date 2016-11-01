@@ -16,7 +16,8 @@ public interface ApiService {
     Call<User> fetchUser(@Path("user") String idUser);
 
     @POST("/user")
-    Call<User> insertUser();
+    Call<User> insertUser(@Query("email") String email, @Query("name") String name, @Query("password")
+            String password, @Query("inspector") Boolean inspector);
 
     @PUT("/user/{user}")
     Call<User> updateUser(@Path("user") String idUser);

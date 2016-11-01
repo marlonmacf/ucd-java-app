@@ -79,7 +79,8 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/btn"
                     android:text="@string/btn_cadastrar"
-                    android:textColor="@color/cardview_light_background" />
+                    android:textColor="@color/cardview_light_background"
+                    android:onClick="btn_register"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -93,5 +94,14 @@
         </RelativeLayout>
 
     </FrameLayout>
+
+    <!-- Circulo de "carregando" -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>

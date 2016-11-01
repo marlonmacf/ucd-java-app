@@ -48,5 +48,7 @@
     <string name="task_card_2">Vire todas as embalagens que possam armazenar água (baldes, garrafas, etc) com a boca para baixo.</string>
     <string name="task_card_3">Verifique pneus e entulhos.</string>
     <string name="task_card_4">Verifique o lixo para possiveis fócos.</string>
+    <string name="register_fail">Erro ao criar usuário!</string>
+    <string name="register_fail_msg">Email incorreto ou usuário já existente</string>
 
 </resources>
