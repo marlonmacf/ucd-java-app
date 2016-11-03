@@ -10,6 +10,10 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+        // Enabling multidex support.
+        multiDexEnabled true
+
     }
 }
 
@@ -17,6 +21,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     compile 'com.android.support:design:25.0.0'

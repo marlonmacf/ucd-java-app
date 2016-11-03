@@ -31,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity implements Serializable 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register_acitivity);
+        setContentView(R.layout.activity_register);
 
         this.apiService = ApiClient.getClient().create(ApiService.class);
         this.progressBar = (ProgressBar) this.findViewById(R.id.progressBar);
