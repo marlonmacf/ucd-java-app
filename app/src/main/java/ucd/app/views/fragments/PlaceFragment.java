@@ -1,11 +1,13 @@
 package ucd.app.views.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,7 +28,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import ucd.app.R;
 import ucd.app.entities.Complaint;
-import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
@@ -35,9 +36,6 @@ import static ucd.app.views.activities.MainActivity.location;
 import static ucd.app.views.activities.MainActivity.longitude;
 
 public class PlaceFragment extends Fragment {
-
-    // Service for access the RETROFIT API.
-    private ApiService apiService;
 
     private List<Complaint> complaints;
     private ProgressBar progressBar;
@@ -55,19 +53,13 @@ public class PlaceFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment.
         final View rootView = inflater.inflate(R.layout.fragment_place, container, false);
 
         // Booting the service API and the progressBar.
-        this.apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
         this.progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        this.progressBar.setVisibility(View.VISIBLE);
         this.complaints = new ArrayList<>();
-
-        // Start loading.
-        progressBar.setVisibility(View.VISIBLE);
-
-        // Fetching for all users.
 
         if (complaints.isEmpty()) {
             apiService.fetchComplaints().enqueue(new Callback<List<Complaint>>() {
@@ -93,7 +85,6 @@ public class PlaceFragment extends Fragment {
 
         googleMapView = (MapView) rootView.findViewById(R.id.mapView);
         googleMapView.onCreate(savedInstanceState);
-
         MapsInitializer.initialize(rootView.getContext());
         googleMapView.onResume();
 
@@ -102,14 +93,15 @@ public class PlaceFragment extends Fragment {
             public void onMapReady(GoogleMap mMap) {
 
                 googleMap = mMap;
+                if (ActivityCompat.checkSelfPermission(rootView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(rootView.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
                 googleMap.setMyLocationEnabled(true);
-
-                // For dropping a marker at a point on the Map.
                 setupMarkers();
 
                 if (location != null) {
 
-                    // For zooming automatically to the location of the marker
+                    // Zooming automatically to the location of the user.
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(12).build();
                     googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
@@ -144,7 +136,7 @@ public class PlaceFragment extends Fragment {
     }
 
     private void setupMarkers() {
-        if(googleMap != null) {
+        if (googleMap != null) {
             for (Complaint complaint : complaints) {
                 Double latitude = Double.parseDouble(complaint.getLatitude());
                 Double longitude = Double.parseDouble(complaint.getLongitude());

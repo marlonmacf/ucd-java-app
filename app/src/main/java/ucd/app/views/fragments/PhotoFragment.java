@@ -9,19 +9,21 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import ucd.app.R;
+import ucd.app.entities.Complaint;
+import ucd.app.rest.ApiClient;
+import ucd.app.rest.ApiService;
 
-import static ucd.app.views.activities.MainActivity.latitude;
-import static ucd.app.views.activities.MainActivity.location;
-import static ucd.app.views.activities.MainActivity.longitude;
+import static ucd.app.views.activities.MainActivity.*;
 
 public class PhotoFragment extends Fragment {
 
@@ -44,11 +46,7 @@ public class PhotoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment.
         rootView = inflater.inflate(R.layout.fragment_photo, container, false);
-
-        // Pega os 3 campos ImageView, o campo da imagem principal, o botão de adicionar e o botão de realizar a denuncia.
         imageView1 = (ImageView) rootView.findViewById(R.id.image_view1);
         imageView2 = (ImageView) rootView.findViewById(R.id.image_view2);
         imageView3 = (ImageView) rootView.findViewById(R.id.image_view3);
@@ -56,19 +54,11 @@ public class PhotoFragment extends Fragment {
         addImageButton = (ImageView) rootView.findViewById(R.id.add_image_botton);
         submitComplaint = (Button) rootView.findViewById(R.id.submit_complaint);
 
-        // Coloca um Listner no botão de adicionar a foto.
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 imageCapture(v);
-            }
-        });
-
-        submitComplaint.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
             }
         });
 
@@ -291,6 +281,7 @@ public class PhotoFragment extends Fragment {
                         .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                createComplaint(input.getText().toString());
                             }
                         })
                         .setNegativeButton(R.string.dialog_button_nao, new DialogInterface.OnClickListener() {
@@ -302,6 +293,33 @@ public class PhotoFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void createComplaint(String description) {
+
+        if (location == null) {
+            Toast.makeText(rootView.getContext(), "Localização desconhecida!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (loggedUser == null) {
+            Toast.makeText(rootView.getContext(), "Usuário desconhecido!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.insertComplaint(latitude.toString(), longitude.toString(), description, loggedUser.getId()).enqueue(new Callback<Complaint>() {
+
+            @Override
+            public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                Toast.makeText(rootView.getContext(), "Denúncia realizada com sucesso!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Complaint> call, Throwable throwable) {
+                Toast.makeText(rootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

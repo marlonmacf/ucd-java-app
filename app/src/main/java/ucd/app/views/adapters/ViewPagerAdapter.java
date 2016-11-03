@@ -11,8 +11,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    // Custom adapter class provides fragments required for the view pager.
     public ViewPagerAdapter(FragmentManager manager) {
+
+        // Custom adapter class provides fragments required for the view pager.
         super(manager);
     }
 

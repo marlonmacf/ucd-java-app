@@ -7,14 +7,14 @@
     android:background="@color/colorBackground"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="ucd.app.views.activities.register_acitivity">
+    tools:context=".views.activities.RegisterActivity">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorBackground"
-        tools:context=".views.activities.login_activity">
+        tools:context=".views.activities.LoginActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 android:paddingTop="35dp">
 
                 <Button
-                    android:id="@+id/btn_entrar"
+                    android:id="@+id/btnSignup"
                     android:layout_width="165dp"
                     android:layout_height="30dp"
                     android:layout_centerHorizontal="true"
@@ -85,7 +85,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/btn_entrar"
+                    android:layout_below="@+id/btnSignup"
                     android:layout_centerHorizontal="true"
                     android:src="@drawable/logo_iftm_small"
                     android:layout_alignParentBottom="true"/>

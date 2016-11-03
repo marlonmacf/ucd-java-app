@@ -10,8 +10,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,12 +22,9 @@ import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
-import static ucd.app.views.activities.login_activity.loggedUser;
+import static ucd.app.views.activities.MainActivity.loggedUser;
 
 public class RankingFragment extends Fragment {
-
-    // Service for access the RETROFIT API.
-    private ApiService apiService;
 
     private ProgressBar progressBar;
     private ListView listView;
@@ -45,13 +44,11 @@ public class RankingFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_ranking, container, false);
 
         // Booting the service API and the progressBar.
-        this.apiService = ApiClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
         this.progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        this.progressBar.setVisibility(View.VISIBLE);
         this.listView = (ListView) rootView.findViewById(R.id.ranking_list);
         this.values = new ArrayList<>();
-
-        // Start loading.
-        progressBar.setVisibility(View.VISIBLE);
 
         // Fetching for all users.
         apiService.fetchRanking().enqueue(new Callback<List<User>>() {
@@ -62,7 +59,7 @@ public class RankingFragment extends Fragment {
                 // Make a object of users and show on the view.
                 int count = 1;
                 for (User user : response.body()) {
-                    if(user.getId().equals(loggedUser.getId())) {
+                    if (user.getId().equals(loggedUser.getId())) {
                         TextView scorePosition = (TextView) rootView.findViewById(R.id.scorePosition);
                         TextView scorePoints = (TextView) rootView.findViewById(R.id.scorePoints);
                         String position = count + "º";

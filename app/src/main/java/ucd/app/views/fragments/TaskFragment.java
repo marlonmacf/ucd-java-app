@@ -61,7 +61,7 @@ public class TaskFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     cdview.setCardBackgroundColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimaryDark));
                                     TextView text = (TextView) cdview.getChildAt(0);
-                                    text.setTextColor(R.color.colorPrimary);
+                                    text.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     ck.setChecked(true);
                                 }
                             })

@@ -50,5 +50,7 @@
     <string name="task_card_4">Verifique o lixo para possiveis fócos.</string>
     <string name="register_fail">Erro ao criar usuário!</string>
     <string name="register_fail_msg">Email incorreto ou usuário já existente</string>
+    <string name="unidos_contra_a_dengue">Unidos Contra a Dengue</string>
+    <string name="logo">Logo</string>
 
 </resources>

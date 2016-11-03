@@ -33,7 +33,7 @@
             android:value="AIzaSyBFz8m4XfwEZ4krTldYZlCKlOftjA2WvHE" />
 
         <!-- Main Activity -->
-        <activity android:name=".views.activities.login_activity">
+        <activity android:name=".views.activities.MainActivity">
 
             <!-- Default intent filter -->
             <intent-filter>
@@ -55,8 +55,9 @@
                     android:scheme="http" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.activities.MainActivity" />
-        <activity android:name=".views.activities.register_acitivity"></activity>
+        <activity android:name=".views.activities.LoginActivity" />
+        <activity android:name=".views.activities.RegisterActivity" />
+        <activity android:name=".views.activities.ContentActivity" />
     </application>
 
 </manifest>

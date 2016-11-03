@@ -32,7 +32,8 @@ public interface ApiService {
     Call<Complaint> fetchComplaint(@Path("complaint") String idComplaint);
 
     @POST("/complaint")
-    Call<Complaint> insertComplaint();
+    Call<Complaint> insertComplaint(@Query("latitude") String latitude, @Query("longitude") String longitude,
+                                    @Query("description") String description, @Query("idUser") Integer idUser);
 
     @PUT("/complaint/{complaint}")
     Call<Complaint> updateComplaint(@Path("complaint") String idComplaint);
