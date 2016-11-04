@@ -5,6 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -155,7 +159,9 @@ public class PhotoFragment extends Fragment {
                                         mainPhoto.setImageBitmap(bitmap);
                                         addImageButton.setEnabled(true);
                                     } else {
-                                        mainPhoto.setImageDrawable(null);
+                                        drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tab_photo_light);
+                                        bitmap = drawable.getBitmap();
+                                        mainPhoto.setImageBitmap(bitmap);
                                         submitComplaint.setEnabled(false);
                                     }
                                 }
@@ -375,13 +381,21 @@ public class PhotoFragment extends Fragment {
      * @param view
      */
     private void showBarMessage(View view) {
-        Snackbar bar = Snackbar.make(view, "Clique e segure na foto para excluir.", Snackbar.LENGTH_INDEFINITE)
-                .setAction(R.string.dialog_neutral, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // Handle user action
-                    }
-                });
-        bar.show();
+        Tooltip.make(rootView.getContext(),
+                new Tooltip.Builder(101)
+
+                        .anchor(imageView1, Tooltip.Gravity.RIGHT)
+                        .closePolicy(new Tooltip.ClosePolicy()
+                                .insidePolicy(true, false)
+                                .outsidePolicy(true, false), 3000)
+                        .activateDelay(900)
+                        .showDelay(800)
+                        .text("Clique e segure na foto para excluir.")
+                        .maxWidth(500)
+                        .withArrow(true)
+                        .withOverlay(true)
+                        .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                        .build()
+        ).show();
     }
 }

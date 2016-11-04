@@ -98,9 +98,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             latitude = location.getLatitude();
             longitude = location.getLongitude();
         }
-
-        Log.i("LATITUDE", latitude.toString());
-        Log.i("LONGITUDE", longitude.toString());
     }
 
     @Override

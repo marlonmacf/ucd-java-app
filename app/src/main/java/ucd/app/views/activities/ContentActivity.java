@@ -50,6 +50,8 @@ public class ContentActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_tab_place_dark);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_tab_task_dark);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_tab_ranking_dark);
+        tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+
     }
 
     @Override
