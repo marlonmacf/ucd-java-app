@@ -1,10 +1,20 @@
 package ucd.app.views.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ucd.app.R;
 import ucd.app.views.adapters.ViewPagerAdapter;
@@ -13,6 +23,9 @@ import ucd.app.views.fragments.PhotoFragment;
 import ucd.app.views.fragments.PlaceFragment;
 import ucd.app.views.fragments.RankingFragment;
 import ucd.app.views.fragments.TaskFragment;
+
+import static ucd.app.views.activities.MainActivity.loggedUser;
+
 
 public class ContentActivity extends AppCompatActivity {
 
@@ -52,6 +65,67 @@ public class ContentActivity extends AppCompatActivity {
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_tab_ranking_dark);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
 
+        // Create the AccountHeader
+        AccountHeader headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.cardview_dark_background)
+                .withProfileImagesVisible(true)
+                .withProfileImagesClickable(false)
+                .withSelectionListEnabledForSingleProfile(false)
+                .addProfiles(
+                        new ProfileDrawerItem().withName(loggedUser.getName()).withEmail(loggedUser.getEmail()).withIcon(getResources().getDrawable(R.drawable.ic_logo_green))
+                )
+                .build();
+
+        //create the drawer and remember the `Drawer` result object
+        Drawer result = new DrawerBuilder()
+                .withAccountHeader(headerResult)
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.nav_profile),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.nav_settings),
+                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.nav_about),
+                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.nav_logout)
+                )
+                /**
+                 * Listener nas opções do menu de navegação.
+                 * Switch case para direcionar para tela respectiva de cada opção.
+                 *
+                 * 1-> Dados Pessoais.
+                 * 2-> Alterar Senha.
+                 * 3-> Sobre.
+                 * 4-> Sair.
+                 *
+                 * @param view
+                 * @param position
+                 * @param drawerItem
+                 */
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+
+                        switch (position) {
+                            case 1:
+
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+
+                                break;
+                            case 4:
+                                loggedUser = null;
+                                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                                startActivity(intent);
+                                break;
+                        }
+                        return true;
+                    }
+                })
+                .build();
+        result.setSelection(0);
     }
 
     @Override

@@ -52,5 +52,9 @@
     <string name="register_fail_msg">Email incorreto ou usuário já existente</string>
     <string name="unidos_contra_a_dengue">Unidos Contra a Dengue</string>
     <string name="logo">Logo</string>
+    <string name="nav_profile">Dados Cadastrais</string>
+    <string name="nav_settings">Alterar Senha</string>
+    <string name="nav_about">Sobre</string>
+    <string name="nav_logout">Sair</string>
 
 </resources>
