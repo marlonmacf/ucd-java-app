@@ -64,8 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/position"
-                android:paddingTop="10dp"
-                android:paddingBottom="20dp">
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp">
 
                 <!-- Score -->
                 <TextView
@@ -114,10 +114,11 @@
 
                     <ListView
                         android:id="@+id/ranking_list"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                     </ListView>
+
 
                 </android.support.v7.widget.CardView>
 

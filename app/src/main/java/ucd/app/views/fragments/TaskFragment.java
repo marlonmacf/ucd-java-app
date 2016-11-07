@@ -49,7 +49,7 @@ public class TaskFragment extends Fragment {
             cdview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView t = (TextView) cdview.getChildAt(1);
+                    final TextView t = (TextView) cdview.getChildAt(1);
                     String msg = (String) t.getText();
                     final CheckBox ck = (CheckBox) cdview.getChildAt(0);
 
@@ -60,8 +60,7 @@ public class TaskFragment extends Fragment {
                             .setPositiveButton(R.string.dialog_button_sim, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     cdview.setCardBackgroundColor(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimaryDark));
-                                    TextView text = (TextView) cdview.getChildAt(0);
-                                    text.setTextColor(getResources().getColor(R.color.colorPrimary));
+                                    t.setTextColor(getResources().getColor(R.color.colorPrimary));
                                     ck.setChecked(true);
                                 }
                             })

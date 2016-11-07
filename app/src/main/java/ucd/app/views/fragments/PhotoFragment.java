@@ -4,15 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,6 +106,7 @@ public class PhotoFragment extends Fragment {
             }
         });
 
+        // Caso de um click longo na primeira imagem.
         imageView1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -157,6 +154,7 @@ public class PhotoFragment extends Fragment {
                                         drawable = (BitmapDrawable) imageView1.getDrawable();
                                         bitmap = drawable.getBitmap();
                                         mainPhoto.setImageBitmap(bitmap);
+                                        addImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_box_black_48dp));
                                         addImageButton.setEnabled(true);
                                     } else {
                                         drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tab_photo_light);
@@ -176,6 +174,7 @@ public class PhotoFragment extends Fragment {
             }
         });
 
+        // Caso de um click longo na segunda imagem.
         imageView2.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -205,6 +204,7 @@ public class PhotoFragment extends Fragment {
                                     drawable = (BitmapDrawable) imageView1.getDrawable();
                                     bitmap = drawable.getBitmap();
                                     mainPhoto.setImageBitmap(bitmap);
+                                    addImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_box_black_48dp));
                                     addImageButton.setEnabled(true);
 
 
@@ -222,6 +222,7 @@ public class PhotoFragment extends Fragment {
             }
         });
 
+        // Caso de um click longo na terceira imagem.
         imageView3.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -245,6 +246,7 @@ public class PhotoFragment extends Fragment {
 
                                     // Exclui a terceira imagem.
                                     imageView3.setImageDrawable(null);
+                                    addImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_box_black_48dp));
                                     addImageButton.setEnabled(true);
                                 }
 
@@ -356,13 +358,16 @@ public class PhotoFragment extends Fragment {
                     imageView2.setImageBitmap(bitmap);
                 } else if (imageView3.getDrawable() == null) {
                     imageView3.setImageBitmap(bitmap);
+                    addImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_box_grey_48dp));
                     addImageButton.setEnabled(false);
                 }
             }
         }
 
         // Habilita o botão de realizar denuncias.
+
         submitComplaint.setEnabled(true);
+        submitComplaint.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     /**
@@ -383,18 +388,17 @@ public class PhotoFragment extends Fragment {
     private void showBarMessage(View view) {
         Tooltip.make(rootView.getContext(),
                 new Tooltip.Builder(101)
-
                         .anchor(imageView1, Tooltip.Gravity.RIGHT)
                         .closePolicy(new Tooltip.ClosePolicy()
                                 .insidePolicy(true, false)
-                                .outsidePolicy(true, false), 3000)
-                        .activateDelay(900)
-                        .showDelay(800)
+                                .outsidePolicy(true, false), 4000)
+                        .activateDelay(500)
+                        .showDelay(700)
                         .text("Clique e segure na foto para excluir.")
-                        .maxWidth(500)
+                        .maxWidth(600)
                         .withArrow(true)
                         .withOverlay(true)
-                        .floatingAnimation(Tooltip.AnimationBuilder.DEFAULT)
+                        .floatingAnimation(Tooltip.AnimationBuilder.SLOW)
                         .build()
         ).show();
     }

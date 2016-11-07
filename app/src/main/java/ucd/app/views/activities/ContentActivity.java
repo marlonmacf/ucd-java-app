@@ -83,10 +83,10 @@ public class ContentActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.nav_profile),
-                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.nav_settings),
-                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.nav_about),
-                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.nav_logout)
+                        new PrimaryDrawerItem().withIdentifier(1).withName(R.string.nav_profile).withIcon(R.drawable.ic_assignment_ind_white_36dp),
+                        new PrimaryDrawerItem().withIdentifier(2).withName(R.string.nav_settings).withIcon(R.drawable.ic_settings_white_36dp),
+                        new PrimaryDrawerItem().withIdentifier(3).withName(R.string.nav_about).withIcon(R.drawable.ic_help_white_36dp),
+                        new PrimaryDrawerItem().withIdentifier(4).withName(R.string.nav_logout).withIcon(R.drawable.ic_exit_to_app_white_36dp)
                 )
                 /**
                  * Listener nas opções do menu de navegação.

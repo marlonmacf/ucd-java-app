@@ -96,7 +96,6 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:backgroundTint="@color/colorAccent"
                     android:enabled="false"
                     android:text="@string/photo_button"
                     android:textColor="@color/cardview_light_background" />
