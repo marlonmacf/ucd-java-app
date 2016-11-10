@@ -36,7 +36,7 @@
     <string name="btn_cadastrar">Cadastrar</string>
     <string name="label_password">Senha</string>
     <string name="label_email">Email</string>
-    <string name="label_name">Nome</string>
+    <string name="label_name">Nome (completo)</string>
     <string name="label_new_account">Criar uma nova conta</string>
 
     <string name="login_fail">Falha ao logar!</string>

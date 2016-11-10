@@ -18,6 +18,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import ucd.app.R;
 import ucd.app.views.adapters.ViewPagerAdapter;
+import ucd.app.views.drawers.profileActivity;
 import ucd.app.views.fragments.InfoFragment;
 import ucd.app.views.fragments.PhotoFragment;
 import ucd.app.views.fragments.PlaceFragment;
@@ -105,9 +106,11 @@ public class ContentActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
+                        Intent intent;
                         switch (position) {
                             case 1:
-
+                                intent = new Intent(view.getContext(), profileActivity.class);
+                                startActivity(intent);
                                 break;
                             case 2:
 
@@ -117,7 +120,7 @@ public class ContentActivity extends AppCompatActivity {
                                 break;
                             case 4:
                                 loggedUser = null;
-                                Intent intent = new Intent(view.getContext(), LoginActivity.class);
+                                intent = new Intent(view.getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 break;
                         }
