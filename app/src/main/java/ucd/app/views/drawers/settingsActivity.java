@@ -74,20 +74,11 @@ public class settingsActivity extends AppCompatActivity {
                         public void onResponse(Call<User> call, Response<User> response) {
                             progressBar.setVisibility(View.INVISIBLE);
                             loggedUser = response.body();
-                            Toast.makeText(settingsActivity.this, loggedUser.getPassword(), Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable throwable) {
                             progressBar.setVisibility(View.INVISIBLE);
-
-                            new AlertDialog.Builder(view.getContext())
-                                    .setTitle(R.string.msg_Erro)
-                                    .setNeutralButton(R.string.dialog_neutral, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-                                        }
-                                    })
-                                    .show();
                         }
                     });
                 } else {

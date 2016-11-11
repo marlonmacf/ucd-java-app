@@ -65,5 +65,6 @@
     <string name="label_senha_nova2">Repita a senha</string>
     <string name="btn_alterar_senha">Alterar Senha</string>
     <string name="msg_nova_senha_igual">A nova senha não pode ser igual a senha antiga!</string>
+    <string name="msg_excluido_sucesso">Usuario excluido com sucesso!</string>
 
 </resources>

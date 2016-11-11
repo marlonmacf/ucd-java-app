@@ -61,9 +61,21 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/inspect"
             android:text="Inspetor"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:paddingTop="5dp"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_ck"
+        android:text="Deletar conta"
+        android:textSize="10dp"
+        android:textColor="@color/accent"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="5dp"
+        android:onClick="deleteUser"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
