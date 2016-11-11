@@ -22,7 +22,7 @@ import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
-import static ucd.app.views.activities.MainActivity.loggedUser;
+import static ucd.app.views.activities.MainActivity.*;
 
 public class RankingFragment extends Fragment {
 

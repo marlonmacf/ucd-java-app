@@ -26,7 +26,7 @@ import ucd.app.views.fragments.PlaceFragment;
 import ucd.app.views.fragments.RankingFragment;
 import ucd.app.views.fragments.TaskFragment;
 
-import static ucd.app.views.activities.MainActivity.loggedUser;
+import static ucd.app.views.activities.MainActivity.*;
 
 
 public class ContentActivity extends AppCompatActivity {
@@ -122,6 +122,8 @@ public class ContentActivity extends AppCompatActivity {
                                 break;
                             case 4:
                                 loggedUser = null;
+                                editor.clear();
+                                editor.commit();
                                 intent = new Intent(view.getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 break;

@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import java.io.Serializable;
 
 import android.widget.TextView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,7 +23,7 @@ import ucd.app.entities.User;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 
-import static ucd.app.views.activities.MainActivity.loggedUser;
+import static ucd.app.views.activities.MainActivity.*;
 
 public class LoginActivity extends AppCompatActivity implements Serializable {
 
@@ -35,7 +37,16 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
 
         this.apiService = ApiClient.getClient().create(ApiService.class);
         this.progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        this.progressBar.setVisibility(View.INVISIBLE);
+
+
+        String prefEmail = pref.getString("email", null);
+        String prefPass = pref.getString("password", null);
+
+        if (prefEmail != null) {
+            SharedLogin(prefEmail, prefPass);
+        } else{
+            this.progressBar.setVisibility(View.INVISIBLE);
+        }
 
         Button btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +54,8 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             public void onClick(View view) {
                 String email = ((EditText) findViewById(R.id.email)).getText().toString();
                 String password = ((EditText) findViewById(R.id.password)).getText().toString();
-                makeLogin(email, password);
+                CheckBox stayOn = (CheckBox) findViewById(R.id.ckConectado);
+                makeLogin(email, password, stayOn);
             }
         });
 
@@ -68,14 +80,18 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
         moveTaskToBack(true);
     }
 
-    private void makeLogin(String email, String password) {
+    private void makeLogin(String email, String password, final CheckBox stayOn) {
         progressBar.setVisibility(View.VISIBLE);
-
         apiService.login(email, password).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 loggedUser = response.body();
 
+                if (stayOn.isChecked()) {
+                    editor.putString("email", loggedUser.getEmail());
+                    editor.putString("password", loggedUser.getPassword());
+                    editor.commit();
+                }
                 Intent intent = new Intent(LoginActivity.this, ContentActivity.class);
                 startActivity(intent);
                 finish();
@@ -93,6 +109,26 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
                             }
                         })
                         .show();
+            }
+        });
+
+    }
+
+    private void SharedLogin(String prefEmail, String prefPass) {
+
+        apiService.login(prefEmail, prefPass).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                loggedUser = response.body();
+
+                Intent intent = new Intent(LoginActivity.this, ContentActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
