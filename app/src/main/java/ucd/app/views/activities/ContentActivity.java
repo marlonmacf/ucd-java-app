@@ -19,6 +19,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import ucd.app.R;
 import ucd.app.views.adapters.ViewPagerAdapter;
 import ucd.app.views.drawers.profileActivity;
+import ucd.app.views.drawers.settingsActivity;
 import ucd.app.views.fragments.InfoFragment;
 import ucd.app.views.fragments.PhotoFragment;
 import ucd.app.views.fragments.PlaceFragment;
@@ -113,7 +114,8 @@ public class ContentActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 2:
-
+                                intent = new Intent(view.getContext(), settingsActivity.class);
+                                startActivity(intent);
                                 break;
                             case 3:
 

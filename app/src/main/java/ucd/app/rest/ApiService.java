@@ -1,11 +1,16 @@
 package ucd.app.rest;
 
+import java.util.List;
+
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import ucd.app.entities.Complaint;
 import ucd.app.entities.User;
-
-import java.util.List;
 
 public interface ApiService {
 
@@ -17,10 +22,11 @@ public interface ApiService {
 
     @POST("/user")
     Call<User> insertUser(@Query("email") String email, @Query("name") String name, @Query("password")
-            String password, @Query("inspector") int inspector, @Query("score") Byte score);
+    String password, @Query("inspector") int inspector, @Query("score") Byte score);
 
     @PUT("/user/{user}")
-    Call<User> updateUser(@Path("user") String idUser);
+    Call<User> updateUser(@Path("user") String idUser, @Query("email") String email, @Query("name") String name, @Query("password")
+    String password, @Query("inspector") int inspector, @Query("score") Byte score);
 
     @DELETE("/user/{user}")
     Call<User> deleteUser(@Path("user") String idUser);

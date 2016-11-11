@@ -57,4 +57,13 @@
     <string name="nav_about">Sobre</string>
     <string name="nav_logout">Sair</string>
 
+    <string name="msg_senhas_diferentes">Novas senhas diferentes!</string>
+    <string name="msg_Erro">Erro!</string>
+    <string name="msg_senha_incorreta">Senha incorreta!</string>
+    <string name="label_senha_atual">Senha atual</string>
+    <string name="label_senha_nova1">Nova senha</string>
+    <string name="label_senha_nova2">Repita a senha</string>
+    <string name="btn_alterar_senha">Alterar Senha</string>
+    <string name="msg_nova_senha_igual">A nova senha não pode ser igual a senha antiga!</string>
+
 </resources>

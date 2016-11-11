@@ -59,7 +59,8 @@
         <activity android:name=".views.activities.LoginActivity" />
         <activity android:name=".views.activities.RegisterActivity" />
         <activity android:name=".views.activities.ContentActivity" />
-        <activity android:name=".views.drawers.profileActivity"></activity>
+        <activity android:name=".views.drawers.profileActivity" />
+        <activity android:name=".views.drawers.settingsActivity"></activity>
     </application>
 
 </manifest>
