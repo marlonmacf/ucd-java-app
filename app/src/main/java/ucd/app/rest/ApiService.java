@@ -48,8 +48,4 @@ public interface ApiService {
 
     @GET("/login")
     Call<User> login(@Query("email") String email, @Query("password") String password);
-
-    @Multipart
-    @GET("/login")
-    Call<User> imgurImageUpload(@Part("photosBase") byte[] binarFile);
 }
