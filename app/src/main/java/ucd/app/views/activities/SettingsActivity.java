@@ -1,4 +1,4 @@
-package ucd.app.views.drawers;
+package ucd.app.views.activities;
 
 
 import android.app.AlertDialog;
@@ -22,7 +22,7 @@ import ucd.app.rest.ApiService;
 import static ucd.app.views.activities.MainActivity.loggedUser;
 
 
-public class settingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private EditText old_pass;
     private EditText new_pass1;

@@ -1,4 +1,4 @@
-package ucd.app.views.drawers;
+package ucd.app.views.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,7 +24,7 @@ import ucd.app.views.activities.LoginActivity;
 
 import static ucd.app.views.activities.MainActivity.*;
 
-public class profileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private TextView name;
     private TextView email;

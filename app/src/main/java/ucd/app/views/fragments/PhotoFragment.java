@@ -3,25 +3,42 @@ package ucd.app.views.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.google.gson.Gson;
 import it.sephiroth.android.library.tooltip.Tooltip;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ucd.app.R;
 import ucd.app.entities.Complaint;
+import ucd.app.entities.Imgur;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
+import ucd.app.rest.ImgurClient;
+import ucd.app.rest.ImgurService;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static ucd.app.views.activities.MainActivity.*;
 
@@ -33,6 +50,7 @@ public class PhotoFragment extends Fragment {
     private ImageView addImageButton;
     private ImageView mainPhoto;
     private Button submitComplaint;
+    private ProgressBar progressBar;
     private View rootView;
 
     public PhotoFragment() {
@@ -61,6 +79,8 @@ public class PhotoFragment extends Fragment {
                 imageCapture(v);
             }
         });
+        this.progressBar = (ProgressBar) rootView.findViewById(R.id.progressBar);
+        this.progressBar.setVisibility(View.INVISIBLE);
 
         // Caso de um click simples na primeira imagem.
         imageView1.setOnClickListener(new View.OnClickListener() {
@@ -315,19 +335,108 @@ public class PhotoFragment extends Fragment {
             return;
         }
 
+        postImages(description);
+    }
+
+    private void postImages(final String description) {
+        final ArrayList<String> photoPaths = new ArrayList<>();
+        progressBar.setVisibility(View.VISIBLE);
+
+        // POST IMAGE ONE.
+        String photoBase64 = makePhotoBase64((BitmapDrawable) imageView1.getDrawable());
+        ImgurService imgurService = ImgurClient.getClient().create(ImgurService.class);
+        imgurService.postImage(ImgurClient.MY_IMGUR_CLIENT_ID, photoBase64).enqueue(new Callback<Imgur>() {
+            @Override
+            public void onResponse(Call<Imgur> call, Response<Imgur> response) {
+                Imgur imgur = response.body();
+                photoPaths.add(imgur.data.link);
+                if (imageView2.getDrawable() != null) {
+
+                    // POST IMAGE TWO.
+                    String photoBase64 = makePhotoBase64((BitmapDrawable) imageView2.getDrawable());
+                    ImgurService imgurService = ImgurClient.getClient().create(ImgurService.class);
+                    imgurService.postImage(ImgurClient.MY_IMGUR_CLIENT_ID, photoBase64).enqueue(new Callback<Imgur>() {
+                        @Override
+                        public void onResponse(Call<Imgur> call, Response<Imgur> response) {
+                            Imgur imgur = response.body();
+                            photoPaths.add(imgur.data.link);
+                            if (imageView3.getDrawable() != null) {
+
+                                // POST IMAGE THREE.
+                                String photoBase64 = makePhotoBase64((BitmapDrawable) imageView3.getDrawable());
+                                ImgurService imgurService = ImgurClient.getClient().create(ImgurService.class);
+                                imgurService.postImage(ImgurClient.MY_IMGUR_CLIENT_ID, photoBase64).enqueue(new Callback<Imgur>() {
+                                    @Override
+                                    public void onResponse(Call<Imgur> call, Response<Imgur> response) {
+                                        Imgur imgur = response.body();
+                                        photoPaths.add(imgur.data.link);
+                                        postComplaint(description, photoPaths);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Imgur> call, Throwable throwable) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(rootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                postComplaint(description, photoPaths);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Imgur> call, Throwable throwable) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(rootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    postComplaint(description, photoPaths);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Imgur> call, Throwable throwable) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(rootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void postComplaint(String description, ArrayList<String> photoPaths) {
+        String photos = "";
+        for (String photoPath : photoPaths) {
+            if (!photos.isEmpty()) {
+                photos += ",";
+            }
+            photos += photoPath;
+        }
+
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        apiService.insertComplaint(latitude.toString(), longitude.toString(), description, loggedUser.getId()).enqueue(new Callback<Complaint>() {
+        apiService.insertComplaint(latitude.toString(), longitude.toString(), description, loggedUser.getId(), photos).enqueue(new Callback<Complaint>() {
 
             @Override
             public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(rootView.getContext(), "Denúncia realizada com sucesso!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<Complaint> call, Throwable throwable) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(rootView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String makePhotoBase64(BitmapDrawable drawable) {
+        Bitmap bitmap = drawable.getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
+        byte[] image = stream.toByteArray();
+        String photoBase64 = Base64.encodeToString(image, Base64.NO_WRAP);
+        photoBase64 = photoBase64.replaceAll("\n", "").replaceAll("\r", "");
+        return photoBase64;
     }
 
     /**

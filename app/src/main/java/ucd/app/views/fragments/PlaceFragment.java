@@ -16,20 +16,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import ucd.app.R;
 import ucd.app.entities.Complaint;
+import ucd.app.entities.ComplaintPhoto;
 import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
+import ucd.app.views.adapters.InfoWindowAdapter;
 
 import static ucd.app.views.activities.MainActivity.latitude;
 import static ucd.app.views.activities.MainActivity.location;
@@ -54,6 +59,7 @@ public class PlaceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_place, container, false);
+        final View infoView = inflater.inflate(R.layout.layout_marker, container, false);
 
         // Booting the service API and the progressBar.
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
@@ -97,6 +103,7 @@ public class PlaceFragment extends Fragment {
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
+                googleMap.setInfoWindowAdapter(new InfoWindowAdapter(infoView));
                 setupMarkers();
 
                 if (location != null) {
@@ -140,10 +147,36 @@ public class PlaceFragment extends Fragment {
             for (Complaint complaint : complaints) {
                 Double latitude = Double.parseDouble(complaint.getLatitude());
                 Double longitude = Double.parseDouble(complaint.getLongitude());
-                String title = complaint.getDescription();
-                String description = complaint.getStatus();
 
-                googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(title).snippet(description));
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(latitude, longitude));
+                markerOptions.title(complaint.getDescription());
+
+                String complaintPhotosBase64 = "";
+                for (ComplaintPhoto complaintPhoto : complaint.getComplaintPhotos()) {
+                    complaintPhotosBase64 += complaintPhoto.getBase() + ",";
+                }
+
+                markerOptions.snippet(complaintPhotosBase64);
+
+                switch (complaint.getStatus()) {
+                    case "STARTED":
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        break;
+                    case "INSPECTED":
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        break;
+                    case "CHECKED":
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        break;
+                    case "DENOUNCED":
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        break;
+                    default:
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                }
+
+                googleMap.addMarker(markerOptions);
             }
         }
     }

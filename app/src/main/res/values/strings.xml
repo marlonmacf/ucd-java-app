@@ -66,5 +66,9 @@
     <string name="btn_alterar_senha">Alterar Senha</string>
     <string name="msg_nova_senha_igual">A nova senha não pode ser igual a senha antiga!</string>
     <string name="msg_excluido_sucesso">Usuario excluido com sucesso!</string>
+    <string name="text_view_marker_title">Complaint</string>
+    <string name="image_view_image_one">Imagem da Denuncia um.</string>
+    <string name="image_view_image_two">Imagem da Denúncia dois</string>
+    <string name="image_view_image_three">Imagem da Denúncia dois</string>
 
 </resources>

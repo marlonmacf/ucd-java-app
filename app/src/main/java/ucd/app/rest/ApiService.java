@@ -3,12 +3,7 @@ package ucd.app.rest;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import retrofit2.http.*;
 import ucd.app.entities.Complaint;
 import ucd.app.entities.User;
 
@@ -22,11 +17,11 @@ public interface ApiService {
 
     @POST("/user")
     Call<User> insertUser(@Query("email") String email, @Query("name") String name, @Query("password")
-    String password, @Query("inspector") int inspector, @Query("score") Byte score);
+            String password, @Query("inspector") int inspector, @Query("score") Byte score);
 
     @PUT("/user/{user}")
     Call<User> updateUser(@Path("user") String idUser, @Query("email") String email, @Query("name") String name, @Query("password")
-    String password, @Query("inspector") int inspector, @Query("score") Byte score);
+            String password, @Query("inspector") int inspector, @Query("score") Byte score);
 
     @DELETE("/user/{user}")
     Call<User> deleteUser(@Path("user") String idUser);
@@ -39,7 +34,8 @@ public interface ApiService {
 
     @POST("/complaint")
     Call<Complaint> insertComplaint(@Query("latitude") String latitude, @Query("longitude") String longitude,
-                                    @Query("description") String description, @Query("idUser") Integer idUser);
+                                    @Query("description") String description, @Query("idUser") Integer idUser,
+                                    @Query("photosBase") String photosBase);
 
     @PUT("/complaint/{complaint}")
     Call<Complaint> updateComplaint(@Path("complaint") String idComplaint);
@@ -52,4 +48,8 @@ public interface ApiService {
 
     @GET("/login")
     Call<User> login(@Query("email") String email, @Query("password") String password);
+
+    @Multipart
+    @GET("/login")
+    Call<User> imgurImageUpload(@Part("photosBase") byte[] binarFile);
 }
