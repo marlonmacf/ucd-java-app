@@ -148,16 +148,14 @@ public class PlaceFragment extends Fragment {
                 Double latitude = Double.parseDouble(complaint.getLatitude());
                 Double longitude = Double.parseDouble(complaint.getLongitude());
 
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(new LatLng(latitude, longitude));
-                markerOptions.title(complaint.getDescription());
-
                 String complaintPhotosBase64 = "";
                 for (ComplaintPhoto complaintPhoto : complaint.getComplaintPhotos()) {
-                    complaintPhotosBase64 += complaintPhoto.getBase() + ",";
+                    complaintPhotosBase64 += complaintPhoto.getPath() + ",";
                 }
 
-                markerOptions.snippet(complaintPhotosBase64);
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(new LatLng(latitude, longitude));
+                markerOptions.title(complaint.getDescription() + "-" + complaintPhotosBase64);
 
                 switch (complaint.getStatus()) {
                     case "STARTED":

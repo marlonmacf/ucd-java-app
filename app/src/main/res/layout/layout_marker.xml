@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minWidth="200dp"
               android:orientation="vertical">
 
     <TextView
@@ -10,36 +11,39 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:text="@string/text_view_marker_title"/>
+            android:text="@string/text_view_marker_title"
+            android:paddingBottom="10dp"/>
 
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingBottom="10dp">
 
         <ImageView
                 android:id="@+id/complaint_image1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25"
                 android:src="@drawable/ic_tab_photo_dark"
-                android:contentDescription="@string/image_view_image_one"/>
+                android:contentDescription="@string/image_view_image_one"
+                android:layout_margin="1dp"/>
 
         <ImageView
                 android:id="@+id/complaint_image2"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25"
                 android:src="@drawable/ic_tab_photo_dark"
-                android:contentDescription="@string/image_view_image_two"/>
+                android:contentDescription="@string/image_view_image_two"
+                android:layout_margin="1dp"/>
 
         <ImageView
                 android:id="@+id/complaint_image3"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".25"
                 android:src="@drawable/ic_tab_photo_dark"
-                android:contentDescription="@string/image_view_image_three"/>
+                android:contentDescription="@string/image_view_image_three"
+                android:layout_margin="1dp"/>
 
     </LinearLayout>
 

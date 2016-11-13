@@ -50,8 +50,8 @@ public class ContentActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(this.infoFragment);
         adapter.addFragment(this.photoFragment);
-        adapter.addFragment(this.placeFragment);
         adapter.addFragment(this.taskFragment);
+        adapter.addFragment(this.placeFragment);
         adapter.addFragment(this.rankingFragment);
         viewPager.setAdapter(adapter);
 
@@ -60,8 +60,8 @@ public class ContentActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_tab_info_dark);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_tab_photo_dark);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_tab_place_dark);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_tab_task_dark);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_tab_task_dark);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_tab_place_dark);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_tab_ranking_dark);
         tabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.colorAccent));
 

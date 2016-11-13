@@ -1,17 +1,14 @@
 package ucd.app.views.adapters;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import ucd.app.R;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,39 +21,90 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     }
 
     @Override
-    public View getInfoWindow(Marker marker) {
+    public View getInfoWindow(final Marker marker) {
+        if (marker.isInfoWindowShown()) {
+            marker.hideInfoWindow();
+            marker.showInfoWindow();
+        }
         return null;
     }
 
     @Override
-    public View getInfoContents(Marker marker) {
-        ArrayList<Bitmap> photosBitmap = new ArrayList<>();
-        List<String> complaintPhotosBase64 = Arrays.asList(marker.getSnippet().split(","));
+    public View getInfoContents(final Marker marker) {
+        updateInfoWindow(marker);
+        return infoWindow;
+    }
 
-        for (String complaintPhotoBase64 : complaintPhotosBase64) {
-            byte[] decodedString = Base64.decode(complaintPhotoBase64, Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            photosBitmap.add(decodedByte);
+    private void updateInfoWindow(final Marker marker) {
+        String title = "";
+        String links = "";
+
+        try {
+            title = Arrays.asList(marker.getTitle().split("-")).get(0);
+            links = Arrays.asList(marker.getTitle().split("-")).get(1);
+        } catch (Exception exception) {
+            title = Arrays.asList(marker.getTitle().split("-")).get(0);
+        }
+
+        TextView complaintDescription = (TextView) infoWindow.findViewById(R.id.complaint_description);
+        complaintDescription.setText(title);
+
+        List<String> complaintPhotosBase64 = Arrays.asList(links.split(","));
+
+        ImageView complaintImage1 = (ImageView) infoWindow.findViewById(R.id.complaint_image1);
+        ImageView complaintImage2 = (ImageView) infoWindow.findViewById(R.id.complaint_image2);
+        ImageView complaintImage3 = (ImageView) infoWindow.findViewById(R.id.complaint_image3);
+
+        Picasso picasso = Picasso.with(infoWindow.getContext());
+        try {
+            picasso.load(complaintPhotosBase64.get(0)).into(complaintImage1, new Callback() {
+                @Override
+                public void onSuccess() {
+                    if (marker.isInfoWindowShown()) {
+                        marker.hideInfoWindow();
+                        marker.showInfoWindow();
+                    }
+                }
+
+                @Override
+                public void onError() {}
+            });
+        } catch (Exception exception) {
+            complaintImage1.setImageBitmap(null);
         }
 
         try {
-            ImageView complaintImage1 = (ImageView) infoWindow.findViewById(R.id.complaint_image1);
-            complaintImage1.setImageBitmap(photosBitmap.get(0));
-        } catch (Exception ignored) {}
+            picasso.load(complaintPhotosBase64.get(1)).into(complaintImage2, new Callback() {
+                @Override
+                public void onSuccess() {
+                    if (marker.isInfoWindowShown()) {
+                        marker.hideInfoWindow();
+                        marker.showInfoWindow();
+                    }
+                }
+
+                @Override
+                public void onError() {}
+            });
+        } catch (Exception exception) {
+            complaintImage2.setImageBitmap(null);
+        }
 
         try {
-            ImageView complaintImage2 = (ImageView) infoWindow.findViewById(R.id.complaint_image2);
-            complaintImage2.setImageBitmap(photosBitmap.get(1));
-        } catch (Exception ignored) {}
+            picasso.load(complaintPhotosBase64.get(2)).into(complaintImage3, new Callback() {
+                @Override
+                public void onSuccess() {
+                    if (marker.isInfoWindowShown()) {
+                        marker.hideInfoWindow();
+                        marker.showInfoWindow();
+                    }
+                }
 
-        try {
-            ImageView complaintImage3 = (ImageView) infoWindow.findViewById(R.id.complaint_image3);
-            complaintImage3.setImageBitmap(photosBitmap.get(2));
-        } catch (Exception ignored) {}
-
-        TextView complaintDescription = (TextView) infoWindow.findViewById(R.id.complaint_description);
-        complaintDescription.setText(marker.getTitle());
-
-        return infoWindow;
+                @Override
+                public void onError() {}
+            });
+        } catch (Exception exception) {
+            complaintImage3.setImageBitmap(null);
+        }
     }
 }
