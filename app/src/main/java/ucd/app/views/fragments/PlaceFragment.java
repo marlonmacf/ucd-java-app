@@ -155,7 +155,12 @@ public class PlaceFragment extends Fragment {
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(latitude, longitude));
-                markerOptions.title(complaint.getDescription() + "-" + complaintPhotosBase64);
+
+                if ((!complaint.getDescription().isEmpty()) || (!complaintPhotosBase64.isEmpty())) {
+                    markerOptions.title(complaint.getDescription() + "-" + complaintPhotosBase64);
+                } else {
+                    markerOptions.title("Denúcia Anônima");
+                }
 
                 switch (complaint.getStatus()) {
                     case "STARTED":
