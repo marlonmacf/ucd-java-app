@@ -164,19 +164,19 @@ public class PlaceFragment extends Fragment {
 
                 switch (complaint.getStatus()) {
                     case "STARTED":
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_started));
                         break;
                     case "INSPECTED":
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_inspected));
                         break;
                     case "CHECKED":
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_checked));
                         break;
                     case "DENOUNCED":
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_denounced));
                         break;
                     default:
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher));
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_default));
                 }
 
                 googleMap.addMarker(markerOptions);

@@ -67,12 +67,6 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        // TODO: get the user from the shared preferences and make the login.
-        // String email = "sharedEmail";
-        // String password = "sharedPassword";
-        // if (email != null || password != null) {
-        //     makeLogin(email, password);
-        // }
     }
 
     @Override
@@ -114,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
 
     }
 
-    private void SharedLogin(String prefEmail, String prefPass) {
+    private void SharedLogin(final String prefEmail, final String prefPass) {
 
         apiService.login(prefEmail, prefPass).enqueue(new Callback<User>() {
             @Override
@@ -129,6 +123,11 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
+                EditText email = (EditText) findViewById(R.id.email);
+                EditText pass = (EditText) findViewById(R.id.password);
+
+                email.setText(prefEmail);
+                pass.setText(prefPass);
             }
         });
     }
