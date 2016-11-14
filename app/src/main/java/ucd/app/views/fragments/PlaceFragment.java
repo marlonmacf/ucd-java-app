@@ -150,7 +150,7 @@ public class PlaceFragment extends Fragment {
 
                 String complaintPhotosBase64 = "";
                 for (ComplaintPhoto complaintPhoto : complaint.getComplaintPhotos()) {
-                    complaintPhotosBase64 += complaintPhoto.getPath() + ",";
+                    complaintPhotosBase64 += complaintPhoto.getPath() + complaintPhoto.getName() + complaintPhoto.getExtension() + ",";
                 }
 
                 MarkerOptions markerOptions = new MarkerOptions();
