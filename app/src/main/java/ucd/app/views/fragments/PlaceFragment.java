@@ -1,6 +1,8 @@
 package ucd.app.views.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -16,16 +18,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gson.Gson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -104,6 +102,12 @@ public class PlaceFragment extends Fragment {
                 }
                 googleMap.setMyLocationEnabled(true);
                 googleMap.setInfoWindowAdapter(new InfoWindowAdapter(infoView));
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        showComplaintAlertActions(marker, infoView);
+                    }
+                });
                 setupMarkers();
 
                 if (location != null) {
@@ -155,11 +159,10 @@ public class PlaceFragment extends Fragment {
 
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(latitude, longitude));
-
                 if ((!complaint.getDescription().isEmpty()) || (!complaintPhotosBase64.isEmpty())) {
-                    markerOptions.title(complaint.getDescription() + "-" + complaintPhotosBase64);
+                    markerOptions.title(complaint.getStatus() + "STATUS" + complaint.getId() + "ID" + complaint.getDescription() + "-" + complaintPhotosBase64);
                 } else {
-                    markerOptions.title("Denúcia Anônima");
+                    markerOptions.title(complaint.getStatus() + "STATUS" + complaint.getId() + "ID" + "Denúcia Anônima");
                 }
 
                 switch (complaint.getStatus()) {
@@ -182,5 +185,55 @@ public class PlaceFragment extends Fragment {
                 googleMap.addMarker(markerOptions);
             }
         }
+    }
+
+    private void showComplaintAlertActions(Marker marker, final View infoView) {
+        final String status = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(0);
+        final String idComplaint = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(1);
+        final String title = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(0);
+
+        AlertDialog.Builder complaintActions = new AlertDialog.Builder(infoView.getContext());
+        complaintActions.setTitle(title);
+
+        DialogInterface.OnClickListener inspectButton = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(infoView.getContext(), "Inspecionar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+            }
+        };
+        DialogInterface.OnClickListener checkButton = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(infoView.getContext(), "Checar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+            }
+        };
+        DialogInterface.OnClickListener denouceButton = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(infoView.getContext(), "Denunciar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        switch (status) {
+            case "STARTED":
+                complaintActions.setNeutralButton("Inspecionar", inspectButton);
+                complaintActions.setNegativeButton("Denunciar", denouceButton);
+                break;
+            case "INSPECTED":
+                complaintActions.setNeutralButton("Checar", checkButton);
+                complaintActions.setNegativeButton("Denunciar", denouceButton);
+                break;
+            case "CHECKED":
+                complaintActions.setNegativeButton("Denunciar", denouceButton);
+                break;
+            case "DENOUNCED":
+                break;
+            default:
+                complaintActions.setNeutralButton("Inspecionar", inspectButton);
+                complaintActions.setNeutralButton("Checar", checkButton);
+                complaintActions.setNegativeButton("Denunciar", denouceButton);
+        }
+
+        complaintActions.show();
     }
 }

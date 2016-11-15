@@ -1,9 +1,16 @@
 package ucd.app.views.adapters;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.res.ColorStateList;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -40,10 +47,10 @@ public class InfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         String links = "";
 
         try {
-            title = Arrays.asList(marker.getTitle().split("-")).get(0);
-            links = Arrays.asList(marker.getTitle().split("-")).get(1);
+            title = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(0);
+            links = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(1);
         } catch (Exception exception) {
-            title = Arrays.asList(marker.getTitle().split("-")).get(0);
+            title = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(0);
         }
 
         TextView complaintDescription = (TextView) infoWindow.findViewById(R.id.complaint_description);
