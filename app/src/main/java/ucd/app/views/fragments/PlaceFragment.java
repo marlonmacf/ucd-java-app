@@ -133,7 +133,7 @@ public class PlaceFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        googleMapView.onDestroy();
+        //googleMapView.onDestroy();
     }
 
     @Override

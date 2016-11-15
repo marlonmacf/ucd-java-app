@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
+import android.text.Layout;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,12 +66,15 @@ public class PhotoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_photo, container, false);
+        updateScreenOrientation();
+
         imageView1 = (ImageView) rootView.findViewById(R.id.image_view1);
         imageView2 = (ImageView) rootView.findViewById(R.id.image_view2);
         imageView3 = (ImageView) rootView.findViewById(R.id.image_view3);
         mainPhoto = (ImageView) rootView.findViewById(R.id.main_photo);
         addImageButton = (ImageView) rootView.findViewById(R.id.add_image_botton);
         submitComplaint = (Button) rootView.findViewById(R.id.submit_complaint);
+        submitComplaint.setVisibility(View.INVISIBLE);
 
         addImageButton.setOnClickListener(new View.OnClickListener() {
 
@@ -180,7 +184,7 @@ public class PhotoFragment extends Fragment {
                                         drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tab_photo_light);
                                         bitmap = drawable.getBitmap();
                                         mainPhoto.setImageBitmap(bitmap);
-                                        submitComplaint.setEnabled(false);
+                                        submitComplaint.setVisibility(View.INVISIBLE);
                                     }
                                 }
                             })
@@ -403,6 +407,20 @@ public class PhotoFragment extends Fragment {
         });
     }
 
+    private void updateScreenOrientation() {
+        ImageView mainPhoto = (ImageView) rootView.findViewById(R.id.main_photo);
+        View cardView = rootView.findViewById(R.id.bar_bottom);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
+
+        if (rootView.getResources().getConfiguration().orientation == 2) {
+            mainPhoto.setVisibility(View.INVISIBLE);
+            params.addRule(RelativeLayout.BELOW, R.id.bar_top);
+        } else {
+            mainPhoto.setVisibility(View.VISIBLE);
+            params.addRule(RelativeLayout.BELOW, R.id.main_photo);
+        }
+    }
+
     private void postComplaint(String description, ArrayList<String> photoPaths) {
         String photos = "";
         for (String photoPath : photoPaths) {
@@ -471,12 +489,11 @@ public class PhotoFragment extends Fragment {
                     addImageButton.setEnabled(false);
                 }
             }
+
+
+            // Habilita o botão de realizar denuncias.
+            submitComplaint.setVisibility(View.VISIBLE);
         }
-
-        // Habilita o botão de realizar denuncias.
-
-        submitComplaint.setEnabled(true);
-        submitComplaint.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     /**

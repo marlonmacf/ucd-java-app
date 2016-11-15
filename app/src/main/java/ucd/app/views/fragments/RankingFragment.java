@@ -5,11 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +25,7 @@ public class RankingFragment extends Fragment {
     private ProgressBar progressBar;
     private ListView listView;
     private List<String> values;
+    private View rootView;
 
     public RankingFragment() {
         // Required empty public constructor.
@@ -41,7 +38,8 @@ public class RankingFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_ranking, container, false);
+        rootView = inflater.inflate(R.layout.fragment_ranking, container, false);
+        updateScreenOrientation();
 
         // Booting the service API and the progressBar.
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
@@ -88,5 +86,22 @@ public class RankingFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void updateScreenOrientation() {
+        View content = rootView.findViewById(R.id.content);
+        RelativeLayout position = (RelativeLayout) rootView.findViewById(R.id.position);
+        RelativeLayout score = (RelativeLayout) rootView.findViewById(R.id.score);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) content.getLayoutParams();
+
+        if (rootView.getResources().getConfiguration().orientation == 2) {
+            position.setVisibility(View.INVISIBLE);
+            score.setVisibility(View.INVISIBLE);
+            params.addRule(RelativeLayout.BELOW, R.id.bar_top);
+        } else {
+            position.setVisibility(View.VISIBLE);
+            score.setVisibility(View.VISIBLE);
+            params.addRule(RelativeLayout.BELOW, R.id.score);
+        }
     }
 }

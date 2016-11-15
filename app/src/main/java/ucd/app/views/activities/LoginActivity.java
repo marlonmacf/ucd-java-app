@@ -110,6 +110,12 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
 
     private void SharedLogin(final String prefEmail, final String prefPass) {
 
+        EditText email = (EditText) findViewById(R.id.email);
+        EditText pass = (EditText) findViewById(R.id.password);
+
+        email.setText(prefEmail);
+        pass.setText(prefPass);
+
         apiService.login(prefEmail, prefPass).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -123,11 +129,6 @@ public class LoginActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 progressBar.setVisibility(View.INVISIBLE);
-                EditText email = (EditText) findViewById(R.id.email);
-                EditText pass = (EditText) findViewById(R.id.password);
-
-                email.setText(prefEmail);
-                pass.setText(prefPass);
             }
         });
     }
