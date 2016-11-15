@@ -8,10 +8,7 @@ public interface ImgurService {
 
     @Multipart
     @POST("/3/image")
-    Call<Imgur> postImage(
-            @Header("Authorization") String auth,
-            @Part("image") String image
-    );
+    Call<Imgur> postImage(@Header("Authorization") String auth, @Part("image") String image);
 
     @GET("/3/image/{id}")
     Call<Imgur> getImage(@Header("Authorization") String auth, @Path("id") String id);

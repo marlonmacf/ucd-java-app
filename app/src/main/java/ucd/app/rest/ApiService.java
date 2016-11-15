@@ -9,6 +9,12 @@ import ucd.app.entities.User;
 
 public interface ApiService {
 
+    @GET("/login")
+    Call<User> login(@Query("email") String email, @Query("password") String password);
+
+    @GET("/ranking")
+    Call<List<User>> fetchRanking();
+
     @POST("/user")
     Call<User> insertUser(@Query("email") String email, @Query("name") String name, @Query("password")
             String password, @Query("inspector") int inspector, @Query("score") Byte score);
@@ -28,9 +34,12 @@ public interface ApiService {
                                     @Query("description") String description, @Query("idUser") Integer idUser,
                                     @Query("photosBase") String photosBase);
 
-    @GET("/ranking")
-    Call<List<User>> fetchRanking();
+    @GET("/complaint/{complaint}/inspect")
+    Call<List<Complaint>> inspectComplaints(@Path("complaint") Integer idComplaint, @Query("idInspector") Integer idInspector);
 
-    @GET("/login")
-    Call<User> login(@Query("email") String email, @Query("password") String password);
+    @GET("/complaint/{complaint}/check")
+    Call<List<Complaint>> checkComplaints(@Path("complaint") Integer idComplaint);
+
+    @GET("/complaint/{complaint}/denounce")
+    Call<List<Complaint>> denounceComplaints(@Path("complaint") Integer idComplaint);
 }
