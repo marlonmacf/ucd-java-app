@@ -23,11 +23,11 @@
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="35dp">
 
-            <CheckBox
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:clickable="false" />
+                android:src="@drawable/trophy_desactive" />
 
             <TextView
                 android:id="@+id/txt_view1"
@@ -56,11 +56,11 @@
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="35dp">
 
-            <CheckBox
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:clickable="false" />
+                android:src="@drawable/trophy_desactive" />
 
             <TextView
                 android:id="@+id/txt_view2"
@@ -89,11 +89,11 @@
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="35dp">
 
-            <CheckBox
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:clickable="false" />
+                android:src="@drawable/trophy_desactive" />
 
             <TextView
                 android:id="@+id/txt_view3"
@@ -122,11 +122,11 @@
             card_view:cardUseCompatPadding="true"
             card_view:contentPaddingLeft="35dp">
 
-            <CheckBox
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:clickable="false" />
+                android:src="@drawable/trophy_desactive" />
 
             <TextView
                 android:id="@+id/txt_view4"

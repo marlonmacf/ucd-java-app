@@ -22,6 +22,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+
 import ucd.app.R;
 import ucd.app.entities.User;
 
@@ -37,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public static SharedPreferences pref;
     public static SharedPreferences.Editor editor;
+
+    public static ArrayList<String> tasks = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

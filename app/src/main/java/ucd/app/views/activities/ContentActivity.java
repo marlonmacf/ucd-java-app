@@ -16,6 +16,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import it.sephiroth.android.library.tooltip.Tooltip;
 import ucd.app.R;
 import ucd.app.views.adapters.ViewPagerAdapter;
 import ucd.app.views.fragments.InfoFragment;
@@ -137,4 +138,5 @@ public class ContentActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Do nothing.
     }
+
 }
