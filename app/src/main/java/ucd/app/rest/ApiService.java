@@ -35,11 +35,11 @@ public interface ApiService {
                                     @Query("photosBase") String photosBase);
 
     @GET("/complaint/{complaint}/inspect")
-    Call<List<Complaint>> inspectComplaints(@Path("complaint") Integer idComplaint, @Query("idInspector") Integer idInspector);
+    Call<Complaint> inspectComplaints(@Path("complaint") Integer idComplaint, @Query("idInspector") Integer idInspector);
 
     @GET("/complaint/{complaint}/check")
-    Call<List<Complaint>> checkComplaints(@Path("complaint") Integer idComplaint);
+    Call<Complaint> checkComplaints(@Path("complaint") Integer idComplaint);
 
     @GET("/complaint/{complaint}/denounce")
-    Call<List<Complaint>> denounceComplaints(@Path("complaint") Integer idComplaint);
+    Call<Complaint> denounceComplaints(@Path("complaint") Integer idComplaint);
 }

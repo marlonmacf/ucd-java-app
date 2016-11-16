@@ -34,9 +34,7 @@ import ucd.app.rest.ApiClient;
 import ucd.app.rest.ApiService;
 import ucd.app.views.adapters.InfoWindowAdapter;
 
-import static ucd.app.views.activities.MainActivity.latitude;
-import static ucd.app.views.activities.MainActivity.location;
-import static ucd.app.views.activities.MainActivity.longitude;
+import static ucd.app.views.activities.MainActivity.*;
 
 public class PlaceFragment extends Fragment {
 
@@ -187,10 +185,11 @@ public class PlaceFragment extends Fragment {
         }
     }
 
-    private void showComplaintAlertActions(Marker marker, final View infoView) {
+    private void showComplaintAlertActions(final Marker marker, final View infoView) {
         final String status = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(0);
         final String idComplaint = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(1);
         final String title = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(0);
+        final String links = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(1);
 
         AlertDialog.Builder complaintActions = new AlertDialog.Builder(infoView.getContext());
         complaintActions.setTitle(title);
@@ -198,19 +197,70 @@ public class PlaceFragment extends Fragment {
         DialogInterface.OnClickListener inspectButton = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(infoView.getContext(), "Inspecionar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.VISIBLE);
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                apiService.inspectComplaints(Integer.parseInt(idComplaint), loggedUser.getId()).enqueue(new Callback<Complaint>() {
+
+                    @Override
+                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_inspected));
+                        marker.setTitle("INSPECTED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), "Inspecionado com sucesso!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Complaint> call, Throwable throwable) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         };
         DialogInterface.OnClickListener checkButton = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(infoView.getContext(), "Checar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.VISIBLE);
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                apiService.checkComplaints(Integer.parseInt(idComplaint)).enqueue(new Callback<Complaint>() {
+
+                    @Override
+                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_checked));
+                        marker.setTitle("CHECKED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), "Checado com sucesso!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Complaint> call, Throwable throwable) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         };
         DialogInterface.OnClickListener denouceButton = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(infoView.getContext(), "Denunciar: " + status + " " + idComplaint, Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.VISIBLE);
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                apiService.denounceComplaints(Integer.parseInt(idComplaint)).enqueue(new Callback<Complaint>() {
+
+                    @Override
+                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_denounced));
+                        marker.setTitle("DENOUNCED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), "Denunciado com sucesso!", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Complaint> call, Throwable throwable) {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         };
 
