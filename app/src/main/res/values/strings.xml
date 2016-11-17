@@ -70,5 +70,16 @@
     <string name="image_view_image_one">Imagem da Denuncia um.</string>
     <string name="image_view_image_two">Imagem da Denúncia dois</string>
     <string name="image_view_image_three">Imagem da Denúncia dois</string>
+    <string name="msn_complaint_denounced">Denúncia temporariamente desabilitada.</string>
+    <string name="msn_complaint_reported">REPORTADA</string>
+    <string name="complaint_description">complaint description.</string>
+    <string name="complaint_title">Denúncia</string>
+    <string name="btn_inspect">Inspecionar</string>
+    <string name="btn_report">Reportar</string>
+    <string name="btn_check">Checar</string>
+    <string name="msn_inpect_success">Inspecionado com sucesso!</string>
+    <string name="msn_check_success">Checado com sucesso!</string>
+    <string name="msn_report_success">Reportado com sucesso!</string>
+    <string name="txt_empty_description">Denúncia</string>
 
 </resources>

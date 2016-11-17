@@ -423,6 +423,16 @@ public class PhotoFragment extends Fragment {
 
             @Override
             public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_tab_photo_light);
+                Bitmap bitmap = drawable.getBitmap();
+                mainPhoto.setImageBitmap(bitmap);
+                imageView1.setImageDrawable(null);
+                imageView2.setImageDrawable(null);
+                imageView3.setImageDrawable(null);
+                submitComplaint.setVisibility(View.INVISIBLE);
+                addImageButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_box_black_48dp));
+                addImageButton.setEnabled(true);
+
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(rootView.getContext(), "Denúncia realizada com sucesso!", Toast.LENGTH_SHORT).show();
             }

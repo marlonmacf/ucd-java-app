@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -155,13 +156,10 @@ public class PlaceFragment extends Fragment {
                     complaintPhotosBase64 += complaintPhoto.getPath() + complaintPhoto.getName() + complaintPhoto.getExtension() + ",";
                 }
 
+                Gson gson = new Gson();
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(new LatLng(latitude, longitude));
-                if ((!complaint.getDescription().isEmpty()) || (!complaintPhotosBase64.isEmpty())) {
-                    markerOptions.title(complaint.getStatus() + "STATUS" + complaint.getId() + "ID" + complaint.getDescription() + "-" + complaintPhotosBase64);
-                } else {
-                    markerOptions.title(complaint.getStatus() + "STATUS" + complaint.getId() + "ID" + "Denúcia Anônima");
-                }
+                markerOptions.title(gson.toJson(complaint));
 
                 switch (complaint.getStatus()) {
                     case "STARTED":
@@ -185,105 +183,111 @@ public class PlaceFragment extends Fragment {
         }
     }
 
+
     private void showComplaintAlertActions(final Marker marker, final View infoView) {
-        final String status = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(0);
-        final String idComplaint = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(0).split("STATUS")).get(1);
-        final String title = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(0);
-        final String links = Arrays.asList(Arrays.asList(marker.getTitle().split("ID")).get(1).split("-")).get(1);
+        final Gson gson = new Gson();
+        final Complaint complaint = gson.fromJson(marker.getTitle(), Complaint.class);
 
-        AlertDialog.Builder complaintActions = new AlertDialog.Builder(infoView.getContext());
-        complaintActions.setTitle(title);
-
-        DialogInterface.OnClickListener inspectButton = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                progressBar.setVisibility(View.VISIBLE);
-                ApiService apiService = ApiClient.getClient().create(ApiService.class);
-                apiService.inspectComplaints(Integer.parseInt(idComplaint), loggedUser.getId()).enqueue(new Callback<Complaint>() {
-
-                    @Override
-                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_inspected));
-                        marker.setTitle("INSPECTED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), "Inspecionado com sucesso!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Complaint> call, Throwable throwable) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+        if (!complaint.getStatus().equals("DENOUNCED")) {
+            AlertDialog.Builder complaintActions = new AlertDialog.Builder(infoView.getContext());
+            if (complaint.getDescription().isEmpty()) {
+                complaintActions.setTitle(R.string.txt_empty_description);
+            } else {
+                complaintActions.setTitle(complaint.getDescription());
             }
-        };
-        DialogInterface.OnClickListener checkButton = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                progressBar.setVisibility(View.VISIBLE);
-                ApiService apiService = ApiClient.getClient().create(ApiService.class);
-                apiService.checkComplaints(Integer.parseInt(idComplaint)).enqueue(new Callback<Complaint>() {
 
-                    @Override
-                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_checked));
-                        marker.setTitle("CHECKED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), "Checado com sucesso!", Toast.LENGTH_SHORT).show();
-                    }
+            DialogInterface.OnClickListener inspectButton = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                    apiService.inspectComplaints(complaint.getId(), loggedUser.getId()).enqueue(new Callback<Complaint>() {
 
-                    @Override
-                    public void onFailure(Call<Complaint> call, Throwable throwable) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_inspected));
+                            marker.setTitle(gson.toJson(response.body()));
+                            marker.hideInfoWindow();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), R.string.msn_inpect_success, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Complaint> call, Throwable throwable) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+            DialogInterface.OnClickListener checkButton = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                    apiService.checkComplaints(complaint.getId()).enqueue(new Callback<Complaint>() {
+
+                        @Override
+                        public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_checked));
+                            marker.setTitle(gson.toJson(response.body()));
+                            marker.hideInfoWindow();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), R.string.msn_check_success, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Complaint> call, Throwable throwable) {
+                            marker.hideInfoWindow();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+            DialogInterface.OnClickListener denounceButton = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                    apiService.denounceComplaints(complaint.getId()).enqueue(new Callback<Complaint>() {
+
+                        @Override
+                        public void onResponse(Call<Complaint> call, Response<Complaint> response) {
+                            marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_denounced));
+                            marker.setTitle(gson.toJson(response.body()));
+                            marker.hideInfoWindow();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), R.string.msn_report_success, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Complaint> call, Throwable throwable) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            };
+
+            switch (complaint.getStatus()) {
+                case "STARTED":
+                    if ((loggedUser.getInspector() == 1) && (!complaint.getUser().getId().equals(loggedUser.getId()))) {
+                        complaintActions.setNeutralButton(R.string.btn_inspect, inspectButton);
                     }
-                });
+                    complaintActions.setNegativeButton(R.string.btn_report, denounceButton);
+                    break;
+                case "INSPECTED":
+                    if (complaint.getUser().getId().equals(loggedUser.getId())) {
+                        complaintActions.setNeutralButton(R.string.btn_check, checkButton);
+                    }
+                    complaintActions.setNegativeButton(R.string.btn_report, denounceButton);
+                    break;
+                default:
+                    complaintActions.setNegativeButton(R.string.btn_report, denounceButton);
             }
-        };
-        DialogInterface.OnClickListener denouceButton = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                progressBar.setVisibility(View.VISIBLE);
-                ApiService apiService = ApiClient.getClient().create(ApiService.class);
-                apiService.denounceComplaints(Integer.parseInt(idComplaint)).enqueue(new Callback<Complaint>() {
 
-                    @Override
-                    public void onResponse(Call<Complaint> call, Response<Complaint> response) {
-                        marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.complaint_denounced));
-                        marker.setTitle("DENOUNCED" + "STATUS" + idComplaint + "ID" + title + "-" + links);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), "Denunciado com sucesso!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Complaint> call, Throwable throwable) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(infoView.getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        };
-
-        switch (status) {
-            case "STARTED":
-                complaintActions.setNeutralButton("Inspecionar", inspectButton);
-                complaintActions.setNegativeButton("Denunciar", denouceButton);
-                break;
-            case "INSPECTED":
-                complaintActions.setNeutralButton("Checar", checkButton);
-                complaintActions.setNegativeButton("Denunciar", denouceButton);
-                break;
-            case "CHECKED":
-                complaintActions.setNegativeButton("Denunciar", denouceButton);
-                break;
-            case "DENOUNCED":
-                break;
-            default:
-                complaintActions.setNeutralButton("Inspecionar", inspectButton);
-                complaintActions.setNeutralButton("Checar", checkButton);
-                complaintActions.setNegativeButton("Denunciar", denouceButton);
+            complaintActions.show();
         }
-
-        complaintActions.show();
     }
 }
