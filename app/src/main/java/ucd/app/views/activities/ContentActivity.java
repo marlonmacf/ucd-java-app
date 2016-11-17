@@ -117,7 +117,8 @@ public class ContentActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 break;
                             case 3:
-
+                                intent = new Intent(view.getContext(), AboutActivity.class);
+                                startActivity(intent);
                                 break;
                             case 4:
                                 loggedUser = null;

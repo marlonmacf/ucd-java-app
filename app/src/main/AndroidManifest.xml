@@ -61,6 +61,7 @@
         <activity android:name=".views.activities.ContentActivity" />
         <activity android:name=".views.activities.ProfileActivity" />
         <activity android:name=".views.activities.SettingsActivity" />
+        <activity android:name=".views.activities.AboutActivity"></activity>
     </application>
 
 </manifest>
