@@ -9,7 +9,7 @@ import ucd.app.entities.User;
 
 public interface ApiService {
 
-    @GET("/login")
+    @POST("/login")
     Call<User> login(@Query("email") String email, @Query("password") String password);
 
     @GET("/ranking")
